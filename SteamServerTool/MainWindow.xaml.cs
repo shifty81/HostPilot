@@ -6,6 +6,10 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using SteamServerTool.Core.Models;
 using SteamServerTool.Core.Services;
+using SteamServerTool.Core.Services.Mods;
+using SteamServerTool.Core.Models.Mods;
+using SteamServerTool.Core.Models.Mods.Http;
+using SteamServerTool.ViewModels;
 using SteamServerTool.Dialogs;
 using Ellipse = System.Windows.Shapes.Ellipse;
 
@@ -21,6 +25,11 @@ public partial class MainWindow : Window
     private readonly IniFileService     _iniFileService     = new();
     private readonly MinecraftService   _minecraftService   = new();
     private readonly VintageStoryService _vintageStoryService = new();
+    private readonly TemplateModProfileResolver _templateModProfileResolver = new();
+    private readonly ModProviderRegistry _modProviderRegistry;
+    private readonly ModCatalogService _modCatalogService;
+    private readonly IModInstallCoordinator _modInstallCoordinator = new ManagedModInstallCoordinator();
+    private readonly ModsTabViewModel _modsTabViewModel;
 
     /// <summary>
     /// Base directory for all locally-installed servers.
@@ -62,6 +71,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        _modProviderRegistry = BuildModProviderRegistry();
+        _modCatalogService = new ModCatalogService(_modProviderRegistry);
+        _modsTabViewModel = new ModsTabViewModel(_modCatalogService, _templateModProfileResolver, _modInstallCoordinator);
+        _modsTabViewModel.StatusMessage += (_, message) => Dispatcher.InvokeAsync(() => Log($"[Mods] {message}"));
+        ModsTabControl.ViewModel = _modsTabViewModel;
 
         _serverManager.ServerStatusChanged += OnServerStatusChanged;
         _serverManager.ServerCrashed       += OnServerCrashed;
@@ -199,7 +214,7 @@ public partial class MainWindow : Window
         }
 
         // Mods tab
-        RefreshModList(cfg);
+        _ = InitializeModsContextAsync(cfg);
 
         // Scheduled commands tab
         RefreshScheduledList(cfg);
@@ -213,6 +228,46 @@ public partial class MainWindow : Window
         // Logs tab
         TxtLogPath.Text = "";
         TxtLogViewer.Clear();
+    }
+
+    private async Task InitializeModsContextAsync(ServerConfig cfg)
+    {
+        var template = ResolveTemplate(cfg);
+        await _modsTabViewModel.SetContextAsync(cfg, template);
+    }
+
+    private ServerTemplate? ResolveTemplate(ServerConfig cfg)
+    {
+        return ServerTemplates.All.FirstOrDefault(t =>
+            string.Equals(t.Name, cfg.ServerType, StringComparison.OrdinalIgnoreCase) ||
+            (cfg.AppId > 0 && t.AppId == cfg.AppId) ||
+            (!string.IsNullOrWhiteSpace(t.Executable) && string.Equals(t.Executable, cfg.Executable, StringComparison.OrdinalIgnoreCase)));
+    }
+
+    private static ModProviderRegistry BuildModProviderRegistry()
+    {
+        var curseForgeOptions = new ModProviderEndpointOptions
+        {
+            ProviderName = "CurseForge",
+            SearchEndpointTemplate = "https://example.invalid/curseforge/search?q={q}",
+            ItemByIdEndpointTemplate = "https://example.invalid/curseforge/mods/{id}",
+            DependencyEndpointTemplate = "https://example.invalid/curseforge/mods/{id}/dependencies",
+        };
+
+        var vintageStoryOptions = new ModProviderEndpointOptions
+        {
+            ProviderName = "VintageStory",
+            SearchEndpointTemplate = "https://example.invalid/vintagestory/mods?q={q}",
+            ItemByIdEndpointTemplate = "https://example.invalid/vintagestory/mods/{id}",
+            DependencyEndpointTemplate = "https://example.invalid/vintagestory/mods/{id}/dependencies",
+        };
+
+        return new ModProviderRegistry(new IModProvider[]
+        {
+            new LocalOnlyModProvider(),
+            new CurseForgeHttpProvider(new System.Net.Http.HttpClient(), curseForgeOptions),
+            new VintageStoryHttpProvider(new System.Net.Http.HttpClient(), vintageStoryOptions),
+        });
     }
 
     private void RefreshDetailHeader(ServerConfig cfg)

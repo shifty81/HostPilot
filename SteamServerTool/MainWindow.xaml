@@ -1,6 +1,7 @@
 <Window x:Class="SteamServerTool.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SteamServerTool.Controls"
         Title="Steam Server Tool"
         Height="900" Width="1400"
         MinHeight="600" MinWidth="900"
@@ -660,54 +661,11 @@
 
                         <!-- ── TAB: Mods ── -->
                         <TabItem Header="Mods">
-                            <Grid Margin="10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Grid.Row="0" Text="WORKSHOP MODS" FontWeight="SemiBold" FontSize="11"
-                                           Foreground="{StaticResource DimForegroundBrush}"
-                                           Margin="0,0,0,8"/>
-
-                                <ListBox Grid.Row="1" x:Name="LbMods">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <DockPanel>
-                                                <TextBlock DockPanel.Dock="Left" Text="{Binding StatusLabel}"
-                                                           Foreground="{Binding StatusColor}"
-                                                           Margin="0,0,8,0" Width="60"/>
-                                                <TextBlock Text="{Binding ModId}" FontFamily="Consolas"/>
-                                            </DockPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-
-                                <Grid Grid.Row="2" Margin="0,8,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="6"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="6"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="6"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="6"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="6"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0" x:Name="TxtModId" Tag="Mod ID (Workshop)"/>
-                                    <Button  Grid.Column="2" Content="＋ Add"     Click="BtnAddMod_Click"/>
-                                    <Button  Grid.Column="4" Content="✕ Remove"   Click="BtnRemoveMod_Click"
-                                             Style="{StaticResource DangerButton}"/>
-                                    <Button  Grid.Column="6" Content="⊘ Disable"  Click="BtnDisableMod_Click"/>
-                                    <Button  Grid.Column="8" Content="⬇ Update"   Click="BtnUpdateMod_Click"
-                                             Style="{StaticResource AccentButton}"/>
-                                    <Button  Grid.Column="10" Content="🔍 Browse Workshop"
-                                             Style="{StaticResource AccentButton}"
-                                             Click="BtnBrowseWorkshop_Click"/>
+                            <Grid>
+                                <controls:ModsTabView x:Name="ModsTabControl" />
+                                <Grid Visibility="Collapsed">
+                                    <TextBox x:Name="TxtModId" />
+                                    <ListBox x:Name="LbMods" />
                                 </Grid>
                             </Grid>
                         </TabItem>

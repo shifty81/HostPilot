@@ -1,0 +1,90 @@
+<UserControl x:Class="SteamServerTool.Controls.ModsTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Mods" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBlock Text="{Binding ProfileSummary}" Foreground="#B0B0B0" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <DockPanel Grid.Row="1" Margin="0,12,0,12">
+            <TextBox Width="320"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center"
+                     Margin="0,0,8,0"
+                     IsEnabled="{Binding SupportsBrowser}"/>
+            <Button Width="100" Content="Search" Command="{Binding SearchCommand}" Margin="0,0,8,0"/>
+            <Button Width="130" Content="Refresh Installed" Command="{Binding RefreshInstalledCommand}"/>
+        </DockPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Browse Mods">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding CatalogResults}"
+                              SelectedItem="{Binding SelectedCatalogItem, Mode=TwoWay}"
+                              IsEnabled="{Binding SupportsBrowser}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" Width="220" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Version" Width="140" DisplayMemberBinding="{Binding Version}"/>
+                                <GridViewColumn Header="Provider" Width="110" DisplayMemberBinding="{Binding ProviderType}"/>
+                                <GridViewColumn Header="Summary" Width="320" DisplayMemberBinding="{Binding Summary}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <DockPanel Grid.Row="1" Margin="0,8,0,0">
+                        <TextBlock VerticalAlignment="Center" Foreground="#B0B0B0"
+                                   Text="Select a catalog item, then install it into the managed mod root."/>
+                        <Button DockPanel.Dock="Right" Width="120" Content="Install Selected" Command="{Binding InstallSelectedCommand}"/>
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="2" Header="Installed / Managed Mods">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding InstalledMods}"
+                              SelectedItem="{Binding SelectedInstalledMod, Mode=TwoWay}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" Width="170" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Provider" Width="90" DisplayMemberBinding="{Binding ProviderType}"/>
+                                <GridViewColumn Header="Status" Width="90" DisplayMemberBinding="{Binding Status}"/>
+                                <GridViewColumn Header="Path" Width="220" DisplayMemberBinding="{Binding InstalledPath}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Border Grid.Row="1" Margin="0,12,0,0" BorderThickness="1" CornerRadius="6" Padding="12" BorderBrush="#555">
+                        <StackPanel>
+                            <TextBlock Text="Local Import" FontWeight="SemiBold"/>
+                            <TextBlock Margin="0,6,0,0" TextWrapping="Wrap"
+                                       Text="Drop mod files, zip archives, or folders here. This wiring pack focuses on browser install + server-context integration, while still leaving the local import path ready for the intake scaffold from the previous step."/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>
