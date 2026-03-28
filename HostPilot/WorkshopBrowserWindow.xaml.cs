@@ -62,7 +62,7 @@ public partial class WorkshopBrowserWindow : Window
         await RunSearch();
     }
 
-    private async void TxtSearchQuery_KeyDown(object sender, KeyEventArgs e)
+    private void TxtSearchQuery_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Enter) BtnSearch_Click(sender, e);
     }
