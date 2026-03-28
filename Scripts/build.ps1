@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Auto-builds the SteamServerTool project.
+    Auto-builds the HostPilot project.
 
 .DESCRIPTION
     Restores NuGet packages, builds the solution, optionally runs tests,
@@ -31,7 +31,7 @@
     .\Scripts\build.ps1 -Configuration Debug -RunTests
 
 .EXAMPLE
-    .\Scripts\build.ps1 -Publish -PublishDir "C:\Release\SteamServerTool"
+    .\Scripts\build.ps1 -Publish -PublishDir "C:\Release\HostPilot"
 
 .EXAMPLE
     .\Scripts\build.ps1 -Publish -Yes
@@ -54,9 +54,9 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 $RepoRoot      = Split-Path -Parent $PSScriptRoot
-$CoreProject   = Join-Path $RepoRoot "SteamServerTool.Core"   "SteamServerTool.Core.csproj"
-$TestsProject  = Join-Path $RepoRoot "SteamServerTool.Tests"  "SteamServerTool.Tests.csproj"
-$AppProject    = Join-Path $RepoRoot "SteamServerTool"         "SteamServerTool.csproj"
+$CoreProject   = Join-Path $RepoRoot "HostPilot.Core"   "HostPilot.Core.csproj"
+$TestsProject  = Join-Path $RepoRoot "HostPilot.Tests"  "HostPilot.Tests.csproj"
+$AppProject    = Join-Path $RepoRoot "HostPilot"         "HostPilot.csproj"
 
 if ([string]::IsNullOrWhiteSpace($PublishDir)) {
     $PublishDir = Join-Path $RepoRoot "publish"
