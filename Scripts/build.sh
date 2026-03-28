@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# build.sh – Build the SteamServerTool solution.
+# build.sh – Build the HostPilot solution.
 #
 # NOTE: WPF applications require a Windows runtime. Use this script inside
 #       WSL2, or in a CI environment that has the .NET 9 SDK with
@@ -19,9 +19,9 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CORE_PROJECT="$REPO_ROOT/SteamServerTool.Core/SteamServerTool.Core.csproj"
-TESTS_PROJECT="$REPO_ROOT/SteamServerTool.Tests/SteamServerTool.Tests.csproj"
-APP_PROJECT="$REPO_ROOT/SteamServerTool/SteamServerTool.csproj"
+CORE_PROJECT="$REPO_ROOT/HostPilot.Core/HostPilot.Core.csproj"
+TESTS_PROJECT="$REPO_ROOT/HostPilot.Tests/HostPilot.Tests.csproj"
+APP_PROJECT="$REPO_ROOT/HostPilot/HostPilot.csproj"
 
 CONFIGURATION="Release"
 RUN_TESTS=false

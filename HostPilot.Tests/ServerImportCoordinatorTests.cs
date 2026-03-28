@@ -1,3 +1,4 @@
+using Xunit;
 using HostPilot.Core.Models.Discovery;
 using HostPilot.Core.Services.Discovery;
 

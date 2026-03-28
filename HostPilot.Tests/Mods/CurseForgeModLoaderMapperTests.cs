@@ -1,3 +1,4 @@
+using Xunit;
 using HostPilot.Core.Services.Mods;
 
 namespace HostPilot.Tests.Mods;

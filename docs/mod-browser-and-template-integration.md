@@ -9,12 +9,12 @@ This pack is the next pass after local mod intake.
 - route all installs through the operation engine so installs are queued, tracked, and recoverable
 
 ## Added scaffold areas
-- `SteamServerTool.Core/Models/Mods/*`
-- `SteamServerTool.Core/Services/Mods/*`
-- `SteamServerTool/ViewModels/ModsTabViewModel.cs`
-- `SteamServerTool/Controls/ModsTabView.xaml`
-- `SteamServerTool/Dialogs/ModImportReviewDialog.*`
-- `SteamServerTool.Tests/Mods/*`
+- `HostPilot.Core/Models/Mods/*`
+- `HostPilot.Core/Services/Mods/*`
+- `HostPilot/ViewModels/ModsTabViewModel.cs`
+- `HostPilot/Controls/ModsTabView.xaml`
+- `HostPilot/Dialogs/ModImportReviewDialog.*`
+- `HostPilot.Tests/Mods/*`
 
 ## Intended flow
 1. Load selected server and template.

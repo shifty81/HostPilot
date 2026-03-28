@@ -1,3 +1,4 @@
+using Xunit;
 using HostPilot.Core.Models.FirstRun;
 using HostPilot.Core.Services.Startup;
 
