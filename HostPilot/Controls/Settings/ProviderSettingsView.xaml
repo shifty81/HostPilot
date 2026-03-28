@@ -1,0 +1,27 @@
+<UserControl x:Class="HostPilot.Controls.Settings.ProviderSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <TextBlock Text="Provider Settings" FontSize="22" FontWeight="Bold" Margin="0,0,0,12"/>
+
+            <CheckBox Content="Enable CurseForge" IsChecked="{Binding Settings.CurseForgeEnabled}" Margin="0,0,0,8"/>
+            <TextBlock Text="CurseForge API Key"/>
+            <TextBox Text="{Binding CurseForgeApiKey, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12"/>
+
+            <CheckBox Content="Enable Vintage Story" IsChecked="{Binding Settings.VintageStoryEnabled}" Margin="0,0,0,8"/>
+            <TextBlock Text="Vintage Story Base URL"/>
+            <TextBox Text="{Binding Settings.VintageStoryBaseUrl, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12"/>
+
+            <CheckBox Content="Enable Steam Workshop" IsChecked="{Binding Settings.SteamWorkshopEnabled}" Margin="0,0,0,8"/>
+            <TextBlock Text="SteamCMD Path Override"/>
+            <TextBox Text="{Binding Settings.SteamCmdPathOverride, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12"/>
+
+            <TextBlock Text="Download Cache Path"/>
+            <TextBox Text="{Binding Settings.DownloadCachePath, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12"/>
+
+            <TextBlock Text="Status" FontWeight="SemiBold"/>
+            <TextBlock Text="{Binding Status}" Margin="0,4,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
