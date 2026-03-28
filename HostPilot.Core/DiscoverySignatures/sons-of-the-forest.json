@@ -1,0 +1,18 @@
+{
+  "manifestId": "sons-of-the-forest",
+  "displayName": "Sons of the Forest",
+  "executables": [
+    "SonsOfTheForestDS.exe"
+  ],
+  "files": [
+    "dedicatedserver.cfg"
+  ],
+  "folders": [
+    "sotf",
+    "Sons of the Forest"
+  ],
+  "configFiles": [
+    "dedicatedserver.cfg"
+  ],
+  "minimumEvidence": 2
+}

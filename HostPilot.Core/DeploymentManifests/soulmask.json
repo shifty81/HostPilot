@@ -1,0 +1,62 @@
+{
+  "id": "soulmask",
+  "displayName": "Soulmask",
+  "icon": "\u2620\ufe0f",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 3017310,
+  "defaultDir": "soulmask",
+  "executable": "WSServer.exe",
+  "launchArgsTemplate": "-port={GamePort}",
+  "configFiles": [
+    "WS/Saved/Config/WindowsServer/GameUserSettings.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 8777,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 27015,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Soulmask Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "50",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "WSServer.exe"
+    ],
+    "files": [
+      "GameUserSettings.ini"
+    ],
+    "folders": [
+      "soulmask",
+      "soulmask",
+      "Soulmask"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Use Unreal-style saved config paths."
+  ]
+}

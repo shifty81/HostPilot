@@ -1,0 +1,20 @@
+{
+  "manifestId": "vrising",
+  "displayName": "V Rising",
+  "executables": [
+    "VRisingServer.exe"
+  ],
+  "files": [
+    "ServerHostSettings.json",
+    "ServerGameSettings.json"
+  ],
+  "folders": [
+    "V Rising",
+    "vrising"
+  ],
+  "configFiles": [
+    "Settings/ServerHostSettings.json",
+    "Settings/ServerGameSettings.json"
+  ],
+  "minimumEvidence": 2
+}

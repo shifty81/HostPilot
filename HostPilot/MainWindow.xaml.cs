@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using HostPilot.Core.Models;
 using HostPilot.Core.Services;
+using HostPilot.Core.Services.Deployment;
+using HostPilot.Core.Services.Discovery;
 using HostPilot.Core.Services.Mods;
 using HostPilot.Core.Models.Mods;
 using HostPilot.Core.Models.Mods.Http;
@@ -30,6 +32,13 @@ public partial class MainWindow : Window
     private readonly ModCatalogService _modCatalogService;
     private readonly IModInstallCoordinator _modInstallCoordinator = new ManagedModInstallCoordinator();
     private readonly ModsTabViewModel _modsTabViewModel;
+    private readonly DeploymentManifestRegistry _manifestRegistry = new(
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DeploymentManifests"));
+    private readonly SignatureRegistry _signatureRegistry = new(
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DiscoverySignatures"));
+    private readonly ManifestBackedServerDetector _serverDetector = new();
+    private readonly DeploymentTemplateCatalog _templateCatalog;
+    private readonly DiscoveredServerImportFactory _discoveredServerImportFactory;
 
     /// <summary>
     /// Base directory for all locally-installed servers.
@@ -72,6 +81,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
+        _templateCatalog = new DeploymentTemplateCatalog(_manifestRegistry);
+        _discoveredServerImportFactory = new DiscoveredServerImportFactory(_manifestRegistry);
+
         _modProviderRegistry = BuildModProviderRegistry();
         _modCatalogService = new ModCatalogService(_modProviderRegistry);
         _modsTabViewModel = new ModsTabViewModel(_modCatalogService, _templateModProfileResolver, _modInstallCoordinator);
@@ -85,8 +97,8 @@ public partial class MainWindow : Window
         _refreshTimer.Tick += (_, _) => RefreshStatus();
         _refreshTimer.Start();
 
-        // Populate template gallery
-        TemplateList.ItemsSource = ServerTemplates.All;
+        // Populate template gallery from manifest catalog (falls back to hardcoded list if no manifests found)
+        TemplateList.ItemsSource = _templateCatalog.GetTemplates();
 
         LoadAndPopulate();
 
@@ -240,7 +252,8 @@ public partial class MainWindow : Window
 
     private ServerTemplate? ResolveTemplate(ServerConfig cfg)
     {
-        return ServerTemplates.All.FirstOrDefault(t =>
+        // Try manifest catalog first (includes fallback to hardcoded list)
+        return _templateCatalog.GetTemplates().FirstOrDefault(t =>
             string.Equals(t.Name, cfg.ServerType, StringComparison.OrdinalIgnoreCase) ||
             (cfg.AppId > 0 && t.AppId == cfg.AppId) ||
             (!string.IsNullOrWhiteSpace(t.Executable) && string.Equals(t.Executable, cfg.Executable, StringComparison.OrdinalIgnoreCase)));

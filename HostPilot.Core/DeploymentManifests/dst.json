@@ -1,0 +1,66 @@
+{
+  "id": "dst",
+  "displayName": "Don't Starve Together",
+  "icon": "\ud83c\udf19",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 343050,
+  "defaultDir": "dst",
+  "executable": "dontstarve_dedicated_server_nullrenderer_x64.exe",
+  "launchArgsTemplate": "-cluster {ClusterName} -shard {ShardName}",
+  "configFiles": [
+    "cluster.ini",
+    "Master/server.ini",
+    "Caves/server.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 10999,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ClusterName",
+      "type": "string",
+      "default": "MyCluster",
+      "required": true
+    },
+    {
+      "key": "ShardName",
+      "type": "string",
+      "default": "Master",
+      "required": true
+    }
+  ],
+  "cluster": {
+    "supported": true,
+    "sharedFields": [
+      "ClusterName",
+      "Token"
+    ],
+    "perNodeFields": [
+      "GamePort",
+      "QueryPort"
+    ]
+  },
+  "discovery": {
+    "executables": [
+      "dontstarve_dedicated_server_nullrenderer_x64.exe"
+    ],
+    "files": [
+      "cluster.ini",
+      "server.ini"
+    ],
+    "folders": [
+      "dst",
+      "dst",
+      "Don't Starve Together"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Master/Caves pairing should be represented as parent + child nodes."
+  ]
+}

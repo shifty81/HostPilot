@@ -1,0 +1,64 @@
+{
+  "id": "vrising",
+  "displayName": "V Rising",
+  "icon": "\ud83e\udddb",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 1829350,
+  "defaultDir": "vrising",
+  "executable": "VRisingServer.exe",
+  "launchArgsTemplate": "-persistentDataPath .\\save-data -serverName \"{ServerName}\"",
+  "configFiles": [
+    "Settings/ServerHostSettings.json",
+    "Settings/ServerGameSettings.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 9876,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 9877,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My V Rising Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "40",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "VRisingServer.exe"
+    ],
+    "files": [
+      "ServerHostSettings.json",
+      "ServerGameSettings.json"
+    ],
+    "folders": [
+      "vrising",
+      "vrising",
+      "V Rising"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "ServerHostSettings and ServerGameSettings should be patched together."
+  ]
+}

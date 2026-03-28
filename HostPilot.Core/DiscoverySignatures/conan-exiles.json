@@ -1,0 +1,18 @@
+{
+  "manifestId": "conan-exiles",
+  "displayName": "Conan Exiles",
+  "executables": [
+    "ConanSandboxServer.exe"
+  ],
+  "files": [
+    "ServerSettings.ini"
+  ],
+  "folders": [
+    "Conan Exiles",
+    "conanexiles"
+  ],
+  "configFiles": [
+    "ConanSandbox/Saved/Config/WindowsServer/ServerSettings.ini"
+  ],
+  "minimumEvidence": 2
+}

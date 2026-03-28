@@ -1,0 +1,68 @@
+{
+  "id": "valheim",
+  "displayName": "Valheim",
+  "icon": "\u2694\ufe0f",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 896660,
+  "defaultDir": "valheim",
+  "executable": "valheim_server.exe",
+  "launchArgsTemplate": "-name \"{ServerName}\" -port {GamePort} -world \"{WorldName}\" -password \"{ServerPassword}\" -public 1 -nographics -batchmode",
+  "configFiles": [
+    "start_headless_server.bat"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 2456,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 2457,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Valheim Server",
+      "required": true
+    },
+    {
+      "key": "WorldName",
+      "type": "string",
+      "default": "Dedicated",
+      "required": true
+    },
+    {
+      "key": "ServerPassword",
+      "type": "password",
+      "default": "secret",
+      "required": true
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "valheim_server.exe"
+    ],
+    "files": [
+      "start_headless_server.bat"
+    ],
+    "folders": [
+      "valheim",
+      "valheim",
+      "Valheim"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Startup script commonly serves as the editable launch surface."
+  ]
+}

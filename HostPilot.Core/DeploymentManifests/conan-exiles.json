@@ -1,0 +1,62 @@
+{
+  "id": "conan-exiles",
+  "displayName": "Conan Exiles",
+  "icon": "\u2694\ufe0f",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 443030,
+  "defaultDir": "conanexiles",
+  "executable": "ConanSandboxServer.exe",
+  "launchArgsTemplate": "-MaxPlayers={MaxPlayers} -nosteamclient -game -server -log",
+  "configFiles": [
+    "ConanSandbox/Saved/Config/WindowsServer/ServerSettings.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 7777,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 27015,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Conan Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "40",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "ConanSandboxServer.exe"
+    ],
+    "files": [
+      "ServerSettings.ini"
+    ],
+    "folders": [
+      "conanexiles",
+      "conanexiles",
+      "Conan Exiles"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "INI-backed dedicated config should be mapped into the editor."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "enshrouded",
+  "displayName": "Enshrouded",
+  "icon": "\ud83c\udf2b\ufe0f",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 2278520,
+  "defaultDir": "enshrouded",
+  "executable": "enshrouded_server.exe",
+  "launchArgsTemplate": "--game_port {GamePort} --query_port {QueryPort}",
+  "configFiles": [
+    "enshrouded_server.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 15636,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 15637,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Enshrouded Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "16",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "enshrouded_server.exe"
+    ],
+    "files": [
+      "enshrouded_server.json"
+    ],
+    "folders": [
+      "enshrouded",
+      "enshrouded",
+      "Enshrouded"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "JSON config should drive most form fields."
+  ]
+}

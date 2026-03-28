@@ -1,0 +1,57 @@
+{
+  "id": "terraria",
+  "displayName": "Terraria",
+  "icon": "\u26cf\ufe0f",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 105600,
+  "defaultDir": "terraria",
+  "executable": "TerrariaServer.exe",
+  "launchArgsTemplate": "-port {GamePort} -maxplayers {MaxPlayers} -world ./worlds/World1.wld",
+  "configFiles": [
+    "serverconfig.txt"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 7777,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "16",
+      "required": false
+    },
+    {
+      "key": "WorldName",
+      "type": "string",
+      "default": "World1",
+      "required": true
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "TerrariaServer.exe"
+    ],
+    "files": [
+      "serverconfig.txt"
+    ],
+    "folders": [
+      "terraria",
+      "terraria",
+      "Terraria"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Template should later split vanilla vs tModLoader."
+  ]
+}

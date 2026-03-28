@@ -1,0 +1,18 @@
+{
+  "manifestId": "space-engineers",
+  "displayName": "Space Engineers",
+  "executables": [
+    "SpaceEngineersDedicated.exe"
+  ],
+  "files": [
+    "SpaceEngineers-Dedicated.cfg"
+  ],
+  "folders": [
+    "Space Engineers",
+    "spaceengineers"
+  ],
+  "configFiles": [
+    "SpaceEngineers-Dedicated.cfg"
+  ],
+  "minimumEvidence": 2
+}

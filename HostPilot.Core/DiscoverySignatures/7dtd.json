@@ -1,0 +1,18 @@
+{
+  "manifestId": "7dtd",
+  "displayName": "7 Days to Die",
+  "executables": [
+    "7DaysToDieServer.exe"
+  ],
+  "files": [
+    "serverconfig.xml"
+  ],
+  "folders": [
+    "7dtd",
+    "7 Days to Die"
+  ],
+  "configFiles": [
+    "serverconfig.xml"
+  ],
+  "minimumEvidence": 2
+}

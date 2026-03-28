@@ -1,0 +1,18 @@
+{
+  "manifestId": "terraria",
+  "displayName": "Terraria",
+  "executables": [
+    "TerrariaServer.exe"
+  ],
+  "files": [
+    "serverconfig.txt"
+  ],
+  "folders": [
+    "terraria",
+    "Terraria"
+  ],
+  "configFiles": [
+    "serverconfig.txt"
+  ],
+  "minimumEvidence": 2
+}

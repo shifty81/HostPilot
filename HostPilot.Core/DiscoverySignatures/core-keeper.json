@@ -1,0 +1,18 @@
+{
+  "manifestId": "core-keeper",
+  "displayName": "Core Keeper",
+  "executables": [
+    "CoreKeeperServer.exe"
+  ],
+  "files": [
+    "dedicated_server_config.ini"
+  ],
+  "folders": [
+    "corekeeper",
+    "Core Keeper"
+  ],
+  "configFiles": [
+    "dedicated_server_config.ini"
+  ],
+  "minimumEvidence": 2
+}

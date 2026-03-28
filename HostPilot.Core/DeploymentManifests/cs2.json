@@ -1,0 +1,62 @@
+{
+  "id": "cs2",
+  "displayName": "Counter-Strike 2",
+  "icon": "\ud83d\udd2b",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 730,
+  "defaultDir": "cs2",
+  "executable": "cs2.exe",
+  "launchArgsTemplate": "-dedicated +map de_dust2 +maxplayers {MaxPlayers}",
+  "configFiles": [
+    "game/csgo/cfg/server.cfg"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 27015,
+      "protocol": "udp"
+    },
+    {
+      "name": "RconPort",
+      "default": 27015,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "20",
+      "required": false
+    },
+    {
+      "key": "MapName",
+      "type": "string",
+      "default": "de_dust2",
+      "required": true
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "cs2.exe"
+    ],
+    "files": [
+      "server.cfg"
+    ],
+    "folders": [
+      "cs2",
+      "cs2",
+      "Counter-Strike 2"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "server.cfg should be surfaced as the main editable file."
+  ]
+}

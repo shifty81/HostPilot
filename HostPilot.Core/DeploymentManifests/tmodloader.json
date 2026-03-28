@@ -1,0 +1,53 @@
+{
+  "id": "tmodloader",
+  "displayName": "tModLoader",
+  "icon": "\ud83d\udd29",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 1281930,
+  "defaultDir": "tmodloader",
+  "executable": "start-tModLoaderServer.bat",
+  "launchArgsTemplate": "-port {GamePort}",
+  "configFiles": [
+    "serverconfig.txt",
+    "Mods/enabled.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 7777,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "16",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "start-tModLoaderServer.bat"
+    ],
+    "files": [
+      "serverconfig.txt",
+      "enabled.json"
+    ],
+    "folders": [
+      "tmodloader",
+      "tmodloader",
+      "tModLoader"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Separate mod folder and enable-list handling from vanilla Terraria."
+  ]
+}

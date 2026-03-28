@@ -1,0 +1,18 @@
+{
+  "manifestId": "soulmask",
+  "displayName": "Soulmask",
+  "executables": [
+    "WSServer.exe"
+  ],
+  "files": [
+    "GameUserSettings.ini"
+  ],
+  "folders": [
+    "soulmask",
+    "Soulmask"
+  ],
+  "configFiles": [
+    "WS/Saved/Config/WindowsServer/GameUserSettings.ini"
+  ],
+  "minimumEvidence": 2
+}

@@ -1,0 +1,18 @@
+{
+  "manifestId": "gmod",
+  "displayName": "Garry's Mod",
+  "executables": [
+    "srcds.exe"
+  ],
+  "files": [
+    "server.cfg"
+  ],
+  "folders": [
+    "Garry's Mod",
+    "gmod"
+  ],
+  "configFiles": [
+    "garrysmod/cfg/server.cfg"
+  ],
+  "minimumEvidence": 2
+}

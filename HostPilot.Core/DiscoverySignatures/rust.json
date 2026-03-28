@@ -1,0 +1,18 @@
+{
+  "manifestId": "rust",
+  "displayName": "Rust",
+  "executables": [
+    "RustDedicated.exe"
+  ],
+  "files": [
+    "server.cfg"
+  ],
+  "folders": [
+    "Rust",
+    "rust"
+  ],
+  "configFiles": [
+    "server/my_server_identity/cfg/server.cfg"
+  ],
+  "minimumEvidence": 2
+}

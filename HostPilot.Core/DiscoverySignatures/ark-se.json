@@ -1,0 +1,20 @@
+{
+  "manifestId": "ark-se",
+  "displayName": "ARK: Survival Evolved",
+  "executables": [
+    "ShooterGameServer.exe"
+  ],
+  "files": [
+    "GameUserSettings.ini",
+    "Game.ini"
+  ],
+  "folders": [
+    "ARK: Survival Evolved",
+    "ark_se"
+  ],
+  "configFiles": [
+    "ShooterGame/Saved/Config/WindowsServer/GameUserSettings.ini",
+    "ShooterGame/Saved/Config/WindowsServer/Game.ini"
+  ],
+  "minimumEvidence": 2
+}

@@ -1,0 +1,57 @@
+{
+  "id": "abiotic-factor",
+  "displayName": "Abiotic Factor",
+  "icon": "\ud83e\uddea",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 2857200,
+  "defaultDir": "abioticfactor",
+  "executable": "AbioticFactorServer.exe",
+  "launchArgsTemplate": "-port={GamePort}",
+  "configFiles": [
+    "AbioticFactor/Saved/Config/WindowsServer/Game.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 7777,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Abiotic Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "6",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "AbioticFactorServer.exe"
+    ],
+    "files": [
+      "Game.ini"
+    ],
+    "folders": [
+      "abioticfactor",
+      "abioticfactor",
+      "Abiotic Factor"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Unreal server footprint should be easy to detect via Saved/Config."
+  ]
+}
