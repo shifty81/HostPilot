@@ -9,7 +9,7 @@ public sealed class ServerImportCoordinator
     {
         var executableRelativePath = MakeRelativeExecutablePath(candidate.InstallPath, candidate.ExecutablePath);
         var backupFolder = Path.Combine(candidate.InstallPath, "Backups");
-        var notes = $"Imported existing server on {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss} UTC";
+        var notes = $"Imported existing server on {DateTimeOffset.UtcNow:yyyy-MM-dd HH:mm:ss} UTC";
 
         if (candidate.Evidence.Count > 0)
         {
