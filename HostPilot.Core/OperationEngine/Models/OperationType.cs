@@ -12,4 +12,6 @@ public static class OperationType
     public const string StartCluster = "START_CLUSTER";
     public const string StopCluster = "STOP_CLUSTER";
     public const string SyncClusterConfig = "SYNC_CLUSTER_CONFIG";
+    public const string InstallMods = "INSTALL_MODS";
+    public const string ImportExistingServer = "IMPORT_EXISTING_SERVER";
 }

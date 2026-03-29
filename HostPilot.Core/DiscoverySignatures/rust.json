@@ -8,8 +8,7 @@
     "server.cfg"
   ],
   "folders": [
-    "Rust",
-    "rust"
+    "Rust"
   ],
   "configFiles": [
     "server/my_server_identity/cfg/server.cfg"

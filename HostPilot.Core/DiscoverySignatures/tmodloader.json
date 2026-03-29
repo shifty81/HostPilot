@@ -9,8 +9,7 @@
     "enabled.json"
   ],
   "folders": [
-    "tmodloader",
-    "tModLoader"
+    "tmodloader"
   ],
   "configFiles": [
     "serverconfig.txt",

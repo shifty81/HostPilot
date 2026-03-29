@@ -50,9 +50,7 @@
       "server.cfg"
     ],
     "folders": [
-      "rust",
-      "rust",
-      "Rust"
+      "rust"
     ],
     "confidence": 0.75
   },

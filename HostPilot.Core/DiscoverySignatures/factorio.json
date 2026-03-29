@@ -8,8 +8,7 @@
     "server-settings.json"
   ],
   "folders": [
-    "Factorio",
-    "factorio"
+    "Factorio"
   ],
   "configFiles": [
     "data/server-settings.json"

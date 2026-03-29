@@ -8,8 +8,7 @@
     "Config.json"
   ],
   "folders": [
-    "unturned",
-    "Unturned"
+    "unturned"
   ],
   "configFiles": [
     "Servers/{ServerName}/Config.json"
