@@ -1,4 +1,5 @@
 using HostPilot.Core.Services.Deployment;
+using Xunit;
 
 namespace HostPilot.Tests;
 

@@ -1,4 +1,5 @@
 using HostPilot.Core.Services.Discovery;
+using Xunit;
 
 namespace HostPilot.Tests;
 

@@ -58,14 +58,13 @@ public class ManifestBackedServerDetector
 
         foreach (var file in signature.Files)
         {
-            if (File.Exists(Path.Combine(directory, file)) ||
-                Directory.EnumerateFiles(directory, file, SearchOption.AllDirectories).Any())
+            if (File.Exists(Path.Combine(directory, file)))
                 evidence.Add($"Found file: {file}");
         }
 
         foreach (var executable in signature.Executables)
         {
-            if (Directory.EnumerateFiles(directory, executable, SearchOption.AllDirectories).Any())
+            if (File.Exists(Path.Combine(directory, executable)))
                 evidence.Add($"Found executable: {executable}");
         }
 

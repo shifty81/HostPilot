@@ -21,11 +21,22 @@ public class SignatureRegistry
         if (!Directory.Exists(_directory))
             return Array.Empty<ServerDetectionSignature>();
 
-        return Directory.EnumerateFiles(_directory, "*.json", SearchOption.TopDirectoryOnly)
-            .OrderBy(Path.GetFileName)
-            .Select(path => JsonSerializer.Deserialize<ServerDetectionSignature>(File.ReadAllText(path), _jsonOptions))
-            .Where(sig => sig is not null)
-            .Cast<ServerDetectionSignature>()
-            .ToList();
+        var signatures = new List<ServerDetectionSignature>();
+        foreach (var path in Directory.EnumerateFiles(_directory, "*.json", SearchOption.TopDirectoryOnly)
+                                      .OrderBy(Path.GetFileName))
+        {
+            try
+            {
+                var sig = JsonSerializer.Deserialize<ServerDetectionSignature>(File.ReadAllText(path), _jsonOptions);
+                if (sig is not null)
+                    signatures.Add(sig);
+            }
+            catch (Exception)
+            {
+                // Skip malformed or unreadable signature files; continue loading the rest.
+            }
+        }
+
+        return signatures;
     }
 }

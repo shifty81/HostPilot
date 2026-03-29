@@ -26,10 +26,17 @@ public class DeploymentManifestRegistry
         foreach (var file in Directory.EnumerateFiles(_manifestDirectory, "*.json", SearchOption.TopDirectoryOnly)
                                       .OrderBy(Path.GetFileName))
         {
-            var json = File.ReadAllText(file);
-            var manifest = JsonSerializer.Deserialize<DeploymentManifest>(json, _jsonOptions);
-            if (manifest is not null)
-                manifests.Add(manifest);
+            try
+            {
+                var json = File.ReadAllText(file);
+                var manifest = JsonSerializer.Deserialize<DeploymentManifest>(json, _jsonOptions);
+                if (manifest is not null)
+                    manifests.Add(manifest);
+            }
+            catch (Exception)
+            {
+                // Skip malformed or unreadable manifest files; continue loading the rest.
+            }
         }
 
         return manifests;
