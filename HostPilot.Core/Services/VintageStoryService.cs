@@ -1,4 +1,5 @@
-using System.Diagnostics;
+using SysProcess = System.Diagnostics.Process;
+using SysProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -81,14 +82,14 @@ public class VintageStoryService
             }
             else
             {
-                var tar = new ProcessStartInfo("tar", $"-xzf \"{archivePath}\" -C \"{installDir}\"")
+                var tar = new SysProcessStartInfo("tar", $"-xzf \"{archivePath}\" -C \"{installDir}\"")
                 {
                     UseShellExecute        = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError  = true,
                     CreateNoWindow         = true
                 };
-                using var proc = Process.Start(tar)!;
+                using var proc = SysProcess.Start(tar)!;
                 await proc.WaitForExitAsync();
                 if (proc.ExitCode != 0)
                     throw new InvalidOperationException($"tar exited with code {proc.ExitCode}.");
