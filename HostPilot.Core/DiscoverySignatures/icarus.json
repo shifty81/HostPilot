@@ -1,0 +1,18 @@
+{
+  "manifestId": "icarus",
+  "displayName": "Icarus Dedicated Server",
+  "executables": [
+    "IcarusServer.exe"
+  ],
+  "files": [
+    "ServerSettings.json"
+  ],
+  "folders": [
+    "icarus",
+    "Icarus Dedicated Server"
+  ],
+  "configFiles": [
+    "Saved/Config/WindowsServer/ServerSettings.json"
+  ],
+  "minimumEvidence": 2
+}

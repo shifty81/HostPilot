@@ -1,0 +1,61 @@
+{
+  "id": "icarus",
+  "displayName": "Icarus Dedicated Server",
+  "icon": "\ud83d\udef0\ufe0f",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 2089300,
+  "defaultDir": "icarus",
+  "executable": "IcarusServer.exe",
+  "launchArgsTemplate": "-port={GamePort} -queryport={QueryPort}",
+  "configFiles": [
+    "Saved/Config/WindowsServer/ServerSettings.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 17777,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 27015,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Icarus Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "8",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "IcarusServer.exe"
+    ],
+    "files": [
+      "ServerSettings.json"
+    ],
+    "folders": [
+      "icarus",
+      "Icarus Dedicated Server"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Keep workshop/mod support optional until the game ecosystem warrants it."
+  ]
+}

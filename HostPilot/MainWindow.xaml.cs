@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using HostPilot.Core.Models;
 using HostPilot.Core.Services;
+using HostPilot.Core.Services.Deployment;
+using HostPilot.Core.Services.Discovery;
 using HostPilot.Core.Services.Mods;
 using HostPilot.Core.Models.Mods;
 using HostPilot.Core.Models.Mods.Http;
@@ -30,6 +32,13 @@ public partial class MainWindow : Window
     private readonly ModCatalogService _modCatalogService;
     private readonly IModInstallCoordinator _modInstallCoordinator = new ManagedModInstallCoordinator();
     private readonly ModsTabViewModel _modsTabViewModel;
+    private readonly DeploymentManifestRegistry _manifestRegistry = new(
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DeploymentManifests"));
+    private readonly SignatureRegistry _signatureRegistry = new(
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DiscoverySignatures"));
+    private readonly ManifestBackedServerDetector _serverDetector = new();
+    private readonly DeploymentTemplateCatalog _templateCatalog;
+    private readonly DiscoveredServerImportFactory _discoveredServerImportFactory;
 
     /// <summary>
     /// Base directory for all locally-installed servers.
@@ -72,6 +81,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
+        _templateCatalog = new DeploymentTemplateCatalog(_manifestRegistry);
+        _discoveredServerImportFactory = new DiscoveredServerImportFactory(_manifestRegistry);
+
         _modProviderRegistry = BuildModProviderRegistry();
         _modCatalogService = new ModCatalogService(_modProviderRegistry);
         _modsTabViewModel = new ModsTabViewModel(_modCatalogService, _templateModProfileResolver, _modInstallCoordinator);
@@ -85,8 +97,8 @@ public partial class MainWindow : Window
         _refreshTimer.Tick += (_, _) => RefreshStatus();
         _refreshTimer.Start();
 
-        // Populate template gallery
-        TemplateList.ItemsSource = ServerTemplates.All;
+        // Populate template gallery from manifest catalog (falls back to hardcoded list if no manifests found)
+        TemplateList.ItemsSource = _templateCatalog.GetTemplates();
 
         LoadAndPopulate();
 
@@ -95,9 +107,9 @@ public partial class MainWindow : Window
     }
 
     // ─── First-run SteamCMD check ─────────────────────────────────────────
-    private async Task CheckFirstRunAsync()
+    private Task CheckFirstRunAsync()
     {
-        if (_steamCmdService.IsSteamCmdInstalled()) return;
+        if (_steamCmdService.IsSteamCmdInstalled()) return Task.CompletedTask;
 
         var dlg = new FirstRunSetupDialog(_steamCmdService) { Owner = this };
         dlg.ShowDialog();
@@ -106,6 +118,8 @@ public partial class MainWindow : Window
             Log($"[Setup] SteamCMD configured: {dlg.ResolvedSteamCmdPath}");
         else
             Log("[Setup] SteamCMD not configured — install/update features will be unavailable.");
+
+        return Task.CompletedTask;
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -238,7 +252,8 @@ public partial class MainWindow : Window
 
     private ServerTemplate? ResolveTemplate(ServerConfig cfg)
     {
-        return ServerTemplates.All.FirstOrDefault(t =>
+        // Try manifest catalog first (includes fallback to hardcoded list)
+        return _templateCatalog.GetTemplates().FirstOrDefault(t =>
             string.Equals(t.Name, cfg.ServerType, StringComparison.OrdinalIgnoreCase) ||
             (cfg.AppId > 0 && t.AppId == cfg.AppId) ||
             (!string.IsNullOrWhiteSpace(t.Executable) && string.Equals(t.Executable, cfg.Executable, StringComparison.OrdinalIgnoreCase)));
@@ -1893,100 +1908,6 @@ public partial class MainWindow : Window
     }
 
     // ═══════════════════════════════════════════════════════════════════════
-    //  MODS TAB
-    // ═══════════════════════════════════════════════════════════════════════
-    private void RefreshModList(ServerConfig cfg)
-    {
-        var items = cfg.Mods.Select(id => new ModListItem(id, false))
-            .Concat(cfg.DisabledMods.Select(id => new ModListItem(id, true)))
-            .OrderBy(m => m.Disabled)
-            .ThenBy(m => m.ModId)
-            .ToList();
-        LbMods.ItemsSource = items;
-    }
-
-    private void BtnAddMod_Click(object sender, RoutedEventArgs e)
-    {
-        if (_selectedConfig == null) return;
-        if (!long.TryParse(TxtModId.Text.Trim(), out var modId)) { Log("Invalid mod ID."); return; }
-        if (_selectedConfig.Mods.Contains(modId) || _selectedConfig.DisabledMods.Contains(modId))
-        { Log($"Mod {modId} already in list."); return; }
-
-        _selectedConfig.Mods.Add(modId);
-        TxtModId.Clear();
-        RefreshModList(_selectedConfig);
-        Log($"Mod {modId} added.");
-    }
-
-    private void BtnRemoveMod_Click(object sender, RoutedEventArgs e)
-    {
-        if (_selectedConfig == null || LbMods.SelectedItem is not ModListItem item) return;
-        _selectedConfig.Mods.Remove(item.ModId);
-        _selectedConfig.DisabledMods.Remove(item.ModId);
-        RefreshModList(_selectedConfig);
-        Log($"Mod {item.ModId} removed.");
-    }
-
-    private void BtnDisableMod_Click(object sender, RoutedEventArgs e)
-    {
-        if (_selectedConfig == null || LbMods.SelectedItem is not ModListItem item) return;
-        if (item.Disabled)
-        {
-            _selectedConfig.DisabledMods.Remove(item.ModId);
-            _selectedConfig.Mods.Add(item.ModId);
-            Log($"Mod {item.ModId} enabled.");
-        }
-        else
-        {
-            _selectedConfig.Mods.Remove(item.ModId);
-            _selectedConfig.DisabledMods.Add(item.ModId);
-            Log($"Mod {item.ModId} disabled.");
-        }
-        RefreshModList(_selectedConfig);
-    }
-
-    private void BtnUpdateMod_Click(object sender, RoutedEventArgs e)
-    {
-        if (_selectedConfig == null || LbMods.SelectedItem is not ModListItem item) return;
-        var progress = new Progress<string>(msg => Dispatcher.InvokeAsync(() => Log($"[SteamCMD] {msg}")));
-        Log($"[SteamCMD] Updating mod {item.ModId} for {_selectedConfig.Name}...");
-        _ = _steamCmdService.UpdateMod(_selectedConfig, item.ModId, progress);
-    }
-
-    private void BtnBrowseWorkshop_Click(object sender, RoutedEventArgs e)
-    {
-        if (_selectedConfig == null) { Log("No server selected."); return; }
-        if (_selectedConfig.AppId <= 0)
-        {
-            Log("[WARN] Server has no App ID set. Configure the App ID on the Config tab first.");
-            MessageBox.Show("Set the App ID on the Config tab before browsing the Workshop.",
-                "App ID required", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return;
-        }
-
-        var browser = new WorkshopBrowserWindow(_selectedConfig.AppId) { Owner = this };
-        if (browser.ShowDialog() != true) return;
-
-        var added = 0;
-        foreach (var id in browser.SelectedIds)
-        {
-            if (_selectedConfig.Mods.Contains(id) || _selectedConfig.DisabledMods.Contains(id))
-            {
-                Log($"Mod {id} already in list, skipped.");
-                continue;
-            }
-            _selectedConfig.Mods.Add(id);
-            added++;
-        }
-
-        if (added > 0)
-        {
-            RefreshModList(_selectedConfig);
-            Log($"Added {added} mod(s) from Workshop browser.");
-        }
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════
     //  SCHEDULED COMMANDS TAB
     // ═══════════════════════════════════════════════════════════════════════
     private void RefreshScheduledList(ServerConfig cfg)
@@ -2324,22 +2245,6 @@ public class ServerListItem
     {
         Config      = config;
         StatusBrush = statusBrush;
-    }
-}
-
-public class ModListItem
-{
-    public long   ModId      { get; }
-    public bool   Disabled   { get; }
-    public string StatusLabel => Disabled ? "DISABLED" : "ENABLED";
-    public Brush  StatusColor => Disabled
-        ? new SolidColorBrush(Color.FromRgb(0xAA, 0x55, 0x55))
-        : new SolidColorBrush(Color.FromRgb(0x4E, 0xC9, 0x4E));
-
-    public ModListItem(long modId, bool disabled)
-    {
-        ModId    = modId;
-        Disabled = disabled;
     }
 }
 

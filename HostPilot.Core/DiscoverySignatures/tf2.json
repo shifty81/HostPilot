@@ -1,0 +1,18 @@
+{
+  "manifestId": "tf2",
+  "displayName": "Team Fortress 2",
+  "executables": [
+    "srcds.exe"
+  ],
+  "files": [
+    "server.cfg"
+  ],
+  "folders": [
+    "tf2",
+    "Team Fortress 2"
+  ],
+  "configFiles": [
+    "tf/cfg/server.cfg"
+  ],
+  "minimumEvidence": 2
+}

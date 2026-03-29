@@ -1,6 +1,7 @@
-using System.Diagnostics;
 using System.Text.Json;
 using HostPilot.Core.Models;
+using SysProcess = System.Diagnostics.Process;
+using SysProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 
 namespace HostPilot.Core.Services;
 
@@ -38,7 +39,7 @@ public class ServerCrashedEventArgs : EventArgs
 
 public class ServerManager
 {
-    private readonly Dictionary<string, Process>       _processes    = new();
+    private readonly Dictionary<string, SysProcess>       _processes    = new();
     private readonly Dictionary<string, DateTime>      _startTimes   = new();
     private readonly Dictionary<string, ServerStatus>  _statuses     = new();
     private readonly Dictionary<string, StreamWriter>  _stdinWriters = new();
@@ -165,7 +166,7 @@ public class ServerManager
 
         var useStdin = !string.IsNullOrWhiteSpace(config.StdinStopCommand);
 
-        var psi = new ProcessStartInfo
+        var psi = new SysProcessStartInfo
         {
             FileName               = Path.Combine(config.Dir, config.Executable),
             Arguments              = config.LaunchArgs,
@@ -179,7 +180,7 @@ public class ServerManager
         foreach (var kv in config.EnvironmentVariables)
             psi.EnvironmentVariables[kv.Key] = kv.Value;
 
-        var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
+        var process = new SysProcess { StartInfo = psi, EnableRaisingEvents = true };
 
         process.Exited += (_, _) =>
         {

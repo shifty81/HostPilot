@@ -1,0 +1,20 @@
+{
+  "manifestId": "ark-asa",
+  "displayName": "ARK: Survival Ascended",
+  "executables": [
+    "ArkAscendedServer.exe"
+  ],
+  "files": [
+    "GameUserSettings.ini",
+    "Game.ini"
+  ],
+  "folders": [
+    "ARK: Survival Ascended",
+    "ark_sa"
+  ],
+  "configFiles": [
+    "ShooterGame/Saved/Config/WindowsServer/GameUserSettings.ini",
+    "ShooterGame/Saved/Config/WindowsServer/Game.ini"
+  ],
+  "minimumEvidence": 2
+}

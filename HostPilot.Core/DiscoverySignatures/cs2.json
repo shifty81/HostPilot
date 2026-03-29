@@ -1,0 +1,18 @@
+{
+  "manifestId": "cs2",
+  "displayName": "Counter-Strike 2",
+  "executables": [
+    "cs2.exe"
+  ],
+  "files": [
+    "server.cfg"
+  ],
+  "folders": [
+    "cs2",
+    "Counter-Strike 2"
+  ],
+  "configFiles": [
+    "game/csgo/cfg/server.cfg"
+  ],
+  "minimumEvidence": 2
+}

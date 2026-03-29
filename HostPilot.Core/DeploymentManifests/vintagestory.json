@@ -1,0 +1,56 @@
+{
+  "id": "vintagestory",
+  "displayName": "Vintage Story",
+  "icon": "\ud83e\udea8",
+  "tier": "A",
+  "distribution": "custom",
+  "appId": null,
+  "defaultDir": "vintagestory",
+  "executable": "VintagestoryServer.exe",
+  "launchArgsTemplate": "--dataPath ./data --port {GamePort} --maxclients {MaxPlayers}",
+  "configFiles": [
+    "data/serverconfig.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 42420,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "Vintage Story Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "16",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "VintagestoryServer.exe"
+    ],
+    "files": [
+      "serverconfig.json"
+    ],
+    "folders": [
+      "vintagestory",
+      "Vintage Story"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "ModDbUrl and ModPaths deserve dedicated advanced form fields."
+  ]
+}

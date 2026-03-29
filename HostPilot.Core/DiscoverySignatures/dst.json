@@ -1,0 +1,21 @@
+{
+  "manifestId": "dst",
+  "displayName": "Don't Starve Together",
+  "executables": [
+    "dontstarve_dedicated_server_nullrenderer_x64.exe"
+  ],
+  "files": [
+    "cluster.ini",
+    "server.ini"
+  ],
+  "folders": [
+    "dst",
+    "Don't Starve Together"
+  ],
+  "configFiles": [
+    "cluster.ini",
+    "Master/server.ini",
+    "Caves/server.ini"
+  ],
+  "minimumEvidence": 2
+}

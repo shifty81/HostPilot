@@ -1,0 +1,17 @@
+{
+  "manifestId": "enshrouded",
+  "displayName": "Enshrouded",
+  "executables": [
+    "enshrouded_server.exe"
+  ],
+  "files": [
+    "enshrouded_server.json"
+  ],
+  "folders": [
+    "Enshrouded"
+  ],
+  "configFiles": [
+    "enshrouded_server.json"
+  ],
+  "minimumEvidence": 2
+}

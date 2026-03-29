@@ -1,0 +1,20 @@
+{
+  "manifestId": "minecraft-java",
+  "displayName": "Minecraft Java",
+  "executables": [
+    "java.exe"
+  ],
+  "files": [
+    "server.properties",
+    "eula.txt"
+  ],
+  "folders": [
+    "Minecraft Java",
+    "minecraft-java"
+  ],
+  "configFiles": [
+    "server.properties",
+    "eula.txt"
+  ],
+  "minimumEvidence": 2
+}

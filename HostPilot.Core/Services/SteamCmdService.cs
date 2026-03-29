@@ -1,4 +1,5 @@
-using System.Diagnostics;
+using SysProcess = System.Diagnostics.Process;
+using SysProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 using System.Net.Http;
 using HostPilot.Core.Models;
 
@@ -68,14 +69,14 @@ public class SteamCmdService
             else
             {
                 // On Linux use tar
-                var tar = new ProcessStartInfo("tar", $"-xzf \"{archivePath}\" -C \"{installDir}\"")
+                var tar = new SysProcessStartInfo("tar", $"-xzf \"{archivePath}\" -C \"{installDir}\"")
                 {
                     UseShellExecute        = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError  = true,
                     CreateNoWindow         = true
                 };
-                using var proc = Process.Start(tar)!;
+                using var proc = SysProcess.Start(tar)!;
                 await proc.WaitForExitAsync();
                 SteamCmdPath = Path.Combine(installDir, "steamcmd.sh");
             }
@@ -133,7 +134,7 @@ public class SteamCmdService
     private async Task<bool> RunSteamCmd(string args, IProgress<string>? progress)
     {
         AppLogger.Info($"Running SteamCMD: {SteamCmdPath} {args}");
-        var psi = new ProcessStartInfo
+        var psi = new SysProcessStartInfo
         {
             FileName = SteamCmdPath,
             Arguments = args,
@@ -143,7 +144,7 @@ public class SteamCmdService
             CreateNoWindow = true
         };
 
-        using var process = new Process { StartInfo = psi };
+        using var process = new SysProcess { StartInfo = psi };
 
         process.OutputDataReceived += (_, e) =>
         {

@@ -1,0 +1,17 @@
+{
+  "manifestId": "unturned",
+  "displayName": "Unturned",
+  "executables": [
+    "Unturned.exe"
+  ],
+  "files": [
+    "Config.json"
+  ],
+  "folders": [
+    "unturned"
+  ],
+  "configFiles": [
+    "Servers/{ServerName}/Config.json"
+  ],
+  "minimumEvidence": 2
+}

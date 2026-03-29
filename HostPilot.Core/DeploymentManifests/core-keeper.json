@@ -1,0 +1,56 @@
+{
+  "id": "core-keeper",
+  "displayName": "Core Keeper",
+  "icon": "\ud83d\udc8e",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 1963720,
+  "defaultDir": "corekeeper",
+  "executable": "CoreKeeperServer.exe",
+  "launchArgsTemplate": "-world {WorldName} -port {GamePort}",
+  "configFiles": [
+    "dedicated_server_config.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 27015,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "WorldName",
+      "type": "string",
+      "default": "CoreKeeperWorld",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "8",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "CoreKeeperServer.exe"
+    ],
+    "files": [
+      "dedicated_server_config.ini"
+    ],
+    "folders": [
+      "corekeeper",
+      "Core Keeper"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "INI-backed config with simple dedicated parameters."
+  ]
+}

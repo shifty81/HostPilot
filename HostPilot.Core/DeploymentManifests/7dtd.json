@@ -1,0 +1,61 @@
+{
+  "id": "7dtd",
+  "displayName": "7 Days to Die",
+  "icon": "\ud83e\udddf",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 294420,
+  "defaultDir": "7dtd",
+  "executable": "7DaysToDieServer.exe",
+  "launchArgsTemplate": "-configfile=serverconfig.xml -dedicated",
+  "configFiles": [
+    "serverconfig.xml"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 26900,
+      "protocol": "udp"
+    },
+    {
+      "name": "TelnetPort",
+      "default": 8081,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My 7DTD Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "8",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "7DaysToDieServer.exe"
+    ],
+    "files": [
+      "serverconfig.xml"
+    ],
+    "folders": [
+      "7dtd",
+      "7 Days to Die"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "serverconfig.xml should be generated and patched by the deploy flow."
+  ]
+}

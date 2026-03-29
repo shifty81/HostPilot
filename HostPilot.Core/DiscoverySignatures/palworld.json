@@ -1,0 +1,17 @@
+{
+  "manifestId": "palworld",
+  "displayName": "Palworld",
+  "executables": [
+    "PalServer.exe"
+  ],
+  "files": [
+    "PalWorldSettings.ini"
+  ],
+  "folders": [
+    "Palworld"
+  ],
+  "configFiles": [
+    "Pal/Saved/Config/WindowsServer/PalWorldSettings.ini"
+  ],
+  "minimumEvidence": 2
+}

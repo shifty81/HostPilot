@@ -1,0 +1,65 @@
+{
+  "id": "minecraft-bedrock",
+  "displayName": "Minecraft Bedrock",
+  "icon": "\ud83e\uddf1",
+  "tier": "A",
+  "distribution": "custom",
+  "appId": null,
+  "defaultDir": "minecraft-bedrock",
+  "executable": "bedrock_server.exe",
+  "launchArgsTemplate": "",
+  "configFiles": [
+    "server.properties",
+    "permissions.json",
+    "allowlist.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 19132,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "Bedrock Server",
+      "required": true
+    },
+    {
+      "key": "LevelName",
+      "type": "string",
+      "default": "Bedrock level",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "10",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "bedrock_server.exe"
+    ],
+    "files": [
+      "server.properties",
+      "permissions.json"
+    ],
+    "folders": [
+      "minecraftbedrock",
+      "minecraft bedrock"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Bedrock should remain a separate template from Java because files and runtime differ."
+  ]
+}

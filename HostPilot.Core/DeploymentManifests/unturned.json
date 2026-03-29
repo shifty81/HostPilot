@@ -1,0 +1,55 @@
+{
+  "id": "unturned",
+  "displayName": "Unturned",
+  "icon": "\ud83e\uddf0",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 1110390,
+  "defaultDir": "unturned",
+  "executable": "Unturned.exe",
+  "launchArgsTemplate": "-nographics -batchmode +secureserver/{ServerName}",
+  "configFiles": [
+    "Servers/{ServerName}/Config.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 27015,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "MyUnturnedServer",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "24",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "Unturned.exe"
+    ],
+    "files": [
+      "Config.json"
+    ],
+    "folders": [
+      "unturned"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Server folder under /Servers is the key editable footprint."
+  ]
+}

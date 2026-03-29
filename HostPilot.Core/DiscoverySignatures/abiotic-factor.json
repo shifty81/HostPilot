@@ -1,0 +1,18 @@
+{
+  "manifestId": "abiotic-factor",
+  "displayName": "Abiotic Factor",
+  "executables": [
+    "AbioticFactorServer.exe"
+  ],
+  "files": [
+    "Game.ini"
+  ],
+  "folders": [
+    "Abiotic Factor",
+    "abioticfactor"
+  ],
+  "configFiles": [
+    "AbioticFactor/Saved/Config/WindowsServer/Game.ini"
+  ],
+  "minimumEvidence": 2
+}

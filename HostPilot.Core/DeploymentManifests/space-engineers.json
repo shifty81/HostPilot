@@ -1,0 +1,56 @@
+{
+  "id": "space-engineers",
+  "displayName": "Space Engineers",
+  "icon": "\ud83d\ude80",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 298740,
+  "defaultDir": "spaceengineers",
+  "executable": "SpaceEngineersDedicated.exe",
+  "launchArgsTemplate": "",
+  "configFiles": [
+    "SpaceEngineers-Dedicated.cfg"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 27016,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Space Engineers Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "16",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "SpaceEngineersDedicated.exe"
+    ],
+    "files": [
+      "SpaceEngineers-Dedicated.cfg"
+    ],
+    "folders": [
+      "spaceengineers",
+      "Space Engineers"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Primary config is XML/CFG-based depending on install mode."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "satisfactory",
+  "displayName": "Satisfactory",
+  "icon": "\ud83c\udfed",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 1690800,
+  "defaultDir": "satisfactory",
+  "executable": "FactoryServer.exe",
+  "launchArgsTemplate": "-log -unattended",
+  "configFiles": [
+    "FactoryGame/Saved/Config/WindowsServer/ServerSettings.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 7777,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 15777,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Satisfactory Server",
+      "required": true
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "FactoryServer.exe"
+    ],
+    "files": [
+      "ServerSettings.ini"
+    ],
+    "folders": [
+      "satisfactory"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Surface auth token/bootstrap requirements in advanced deployment help."
+  ]
+}

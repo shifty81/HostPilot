@@ -1,0 +1,61 @@
+{
+  "id": "tf2",
+  "displayName": "Team Fortress 2",
+  "icon": "\ud83c\udfa9",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 232250,
+  "defaultDir": "tf2",
+  "executable": "srcds.exe",
+  "launchArgsTemplate": "-game tf +maxplayers {MaxPlayers} +map cp_dustbowl",
+  "configFiles": [
+    "tf/cfg/server.cfg"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 27015,
+      "protocol": "udp"
+    },
+    {
+      "name": "RconPort",
+      "default": 27015,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "MapName",
+      "type": "string",
+      "default": "cp_dustbowl",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "24",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "srcds.exe"
+    ],
+    "files": [
+      "server.cfg"
+    ],
+    "folders": [
+      "tf2",
+      "Team Fortress 2"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Source-engine family can share common detector plumbing."
+  ]
+}

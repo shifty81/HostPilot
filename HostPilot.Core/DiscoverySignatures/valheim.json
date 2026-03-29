@@ -1,0 +1,17 @@
+{
+  "manifestId": "valheim",
+  "displayName": "Valheim",
+  "executables": [
+    "valheim_server.exe"
+  ],
+  "files": [
+    "start_headless_server.bat"
+  ],
+  "folders": [
+    "Valheim"
+  ],
+  "configFiles": [
+    "start_headless_server.bat"
+  ],
+  "minimumEvidence": 2
+}

@@ -1,0 +1,18 @@
+{
+  "manifestId": "project-zomboid",
+  "displayName": "Project Zomboid",
+  "executables": [
+    "StartServer64.bat"
+  ],
+  "files": [
+    "{ServerName}.ini"
+  ],
+  "folders": [
+    "projectzomboid",
+    "Project Zomboid"
+  ],
+  "configFiles": [
+    "Server/{ServerName}.ini"
+  ],
+  "minimumEvidence": 2
+}

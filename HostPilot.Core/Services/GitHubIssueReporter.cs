@@ -1,4 +1,5 @@
-using System.Diagnostics;
+using SysProcess = System.Diagnostics.Process;
+using SysProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -23,7 +24,7 @@ public static class GitHubIssueReporter
         var url = BuildIssueUrl(title, body);
         try
         {
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            SysProcess.Start(new SysProcessStartInfo(url) { UseShellExecute = true });
         }
         catch
         {

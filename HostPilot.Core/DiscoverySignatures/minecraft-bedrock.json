@@ -1,0 +1,21 @@
+{
+  "manifestId": "minecraft-bedrock",
+  "displayName": "Minecraft Bedrock",
+  "executables": [
+    "bedrock_server.exe"
+  ],
+  "files": [
+    "server.properties",
+    "permissions.json"
+  ],
+  "folders": [
+    "minecraft bedrock",
+    "minecraft-bedrock"
+  ],
+  "configFiles": [
+    "server.properties",
+    "permissions.json",
+    "allowlist.json"
+  ],
+  "minimumEvidence": 2
+}

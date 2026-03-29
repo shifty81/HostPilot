@@ -1,0 +1,66 @@
+{
+  "id": "palworld",
+  "displayName": "Palworld",
+  "icon": "\ud83d\udc3e",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 2394010,
+  "defaultDir": "palworld",
+  "executable": "PalServer.exe",
+  "launchArgsTemplate": "-port={GamePort} -players={MaxPlayers}",
+  "configFiles": [
+    "Pal/Saved/Config/WindowsServer/PalWorldSettings.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 8211,
+      "protocol": "udp"
+    },
+    {
+      "name": "RconPort",
+      "default": 25575,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Palworld Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "32",
+      "required": false
+    },
+    {
+      "key": "AdminPassword",
+      "type": "password",
+      "default": "",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "PalServer.exe"
+    ],
+    "files": [
+      "PalWorldSettings.ini"
+    ],
+    "folders": [
+      "palworld"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "PalWorldSettings.ini is the primary server-side config."
+  ]
+}

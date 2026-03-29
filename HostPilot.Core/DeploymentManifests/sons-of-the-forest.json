@@ -1,0 +1,56 @@
+{
+  "id": "sons-of-the-forest",
+  "displayName": "Sons of the Forest",
+  "icon": "\ud83c\udf32",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 2465200,
+  "defaultDir": "sotf",
+  "executable": "SonsOfTheForestDS.exe",
+  "launchArgsTemplate": "-batchmode -nographics -port {GamePort}",
+  "configFiles": [
+    "dedicatedserver.cfg"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 8766,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My SOTF Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "8",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "SonsOfTheForestDS.exe"
+    ],
+    "files": [
+      "dedicatedserver.cfg"
+    ],
+    "folders": [
+      "sotf",
+      "Sons of the Forest"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Use simple CFG-based deployment."
+  ]
+}

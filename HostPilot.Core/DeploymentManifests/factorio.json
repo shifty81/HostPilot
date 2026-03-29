@@ -1,0 +1,55 @@
+{
+  "id": "factorio",
+  "displayName": "Factorio",
+  "icon": "\u2699\ufe0f",
+  "tier": "B",
+  "distribution": "custom",
+  "appId": null,
+  "defaultDir": "factorio",
+  "executable": "bin/x64/factorio.exe",
+  "launchArgsTemplate": "--start-server-load-latest --server-settings server-settings.json",
+  "configFiles": [
+    "data/server-settings.json"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 34197,
+      "protocol": "udp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Factorio Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "20",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "bin/x64/factorio.exe"
+    ],
+    "files": [
+      "server-settings.json"
+    ],
+    "folders": [
+      "factorio"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Non-Steam install support should remain possible even if Steam is used by some users."
+  ]
+}

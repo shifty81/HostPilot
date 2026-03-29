@@ -1,0 +1,18 @@
+{
+  "manifestId": "vintagestory",
+  "displayName": "Vintage Story",
+  "executables": [
+    "VintagestoryServer.exe"
+  ],
+  "files": [
+    "serverconfig.json"
+  ],
+  "folders": [
+    "Vintage Story",
+    "vintagestory"
+  ],
+  "configFiles": [
+    "data/serverconfig.json"
+  ],
+  "minimumEvidence": 2
+}

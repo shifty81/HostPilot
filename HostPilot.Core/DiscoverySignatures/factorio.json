@@ -1,0 +1,17 @@
+{
+  "manifestId": "factorio",
+  "displayName": "Factorio",
+  "executables": [
+    "bin/x64/factorio.exe"
+  ],
+  "files": [
+    "server-settings.json"
+  ],
+  "folders": [
+    "Factorio"
+  ],
+  "configFiles": [
+    "data/server-settings.json"
+  ],
+  "minimumEvidence": 2
+}

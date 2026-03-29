@@ -1,0 +1,79 @@
+{
+  "id": "ark-se",
+  "displayName": "ARK: Survival Evolved",
+  "icon": "\ud83e\udd95",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 376030,
+  "defaultDir": "ark_se",
+  "executable": "ShooterGameServer.exe",
+  "launchArgsTemplate": "{MapName}?listen?SessionName=\"{ServerName}\"?Port={GamePort}?QueryPort={QueryPort} -server -log",
+  "configFiles": [
+    "ShooterGame/Saved/Config/WindowsServer/GameUserSettings.ini",
+    "ShooterGame/Saved/Config/WindowsServer/Game.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 7777,
+      "protocol": "udp"
+    },
+    {
+      "name": "QueryPort",
+      "default": 27015,
+      "protocol": "udp"
+    },
+    {
+      "name": "RconPort",
+      "default": 27020,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My ARK Server",
+      "required": true
+    },
+    {
+      "key": "MapName",
+      "type": "string",
+      "default": "TheIsland",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "70",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": true,
+    "sharedFields": [
+      "ClusterId"
+    ],
+    "perNodeFields": [
+      "GamePort",
+      "QueryPort"
+    ]
+  },
+  "discovery": {
+    "executables": [
+      "ShooterGameServer.exe"
+    ],
+    "files": [
+      "GameUserSettings.ini",
+      "Game.ini"
+    ],
+    "folders": [
+      "ark_se",
+      "ARK: Survival Evolved"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Classic ARK cluster flow mirrors ASA but uses legacy map names."
+  ]
+}

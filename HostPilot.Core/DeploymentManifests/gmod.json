@@ -1,0 +1,61 @@
+{
+  "id": "gmod",
+  "displayName": "Garry's Mod",
+  "icon": "\ud83d\udd27",
+  "tier": "B",
+  "distribution": "steamcmd",
+  "appId": 4020,
+  "defaultDir": "gmod",
+  "executable": "srcds.exe",
+  "launchArgsTemplate": "-game garrysmod +maxplayers {MaxPlayers} +map gm_flatgrass",
+  "configFiles": [
+    "garrysmod/cfg/server.cfg"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 27015,
+      "protocol": "udp"
+    },
+    {
+      "name": "RconPort",
+      "default": 27015,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "MapName",
+      "type": "string",
+      "default": "gm_flatgrass",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "16",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "srcds.exe"
+    ],
+    "files": [
+      "server.cfg"
+    ],
+    "folders": [
+      "gmod",
+      "Garry's Mod"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Treat addons and workshop collections as separate mod surfaces."
+  ]
+}

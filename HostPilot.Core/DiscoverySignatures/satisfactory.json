@@ -1,0 +1,17 @@
+{
+  "manifestId": "satisfactory",
+  "displayName": "Satisfactory",
+  "executables": [
+    "FactoryServer.exe"
+  ],
+  "files": [
+    "ServerSettings.ini"
+  ],
+  "folders": [
+    "Satisfactory"
+  ],
+  "configFiles": [
+    "FactoryGame/Saved/Config/WindowsServer/ServerSettings.ini"
+  ],
+  "minimumEvidence": 2
+}

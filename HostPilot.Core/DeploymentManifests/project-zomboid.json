@@ -1,0 +1,61 @@
+{
+  "id": "project-zomboid",
+  "displayName": "Project Zomboid",
+  "icon": "\ud83e\udddf",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 108600,
+  "defaultDir": "projectzomboid",
+  "executable": "StartServer64.bat",
+  "launchArgsTemplate": "-servername {ServerName}",
+  "configFiles": [
+    "Server/{ServerName}.ini"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 16261,
+      "protocol": "udp"
+    },
+    {
+      "name": "RconPort",
+      "default": 27015,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "MyServer",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "32",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "StartServer64.bat"
+    ],
+    "files": [
+      "{ServerName}.ini"
+    ],
+    "folders": [
+      "projectzomboid",
+      "Project Zomboid"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Zomboid stores many editable knobs in the named server INI."
+  ]
+}

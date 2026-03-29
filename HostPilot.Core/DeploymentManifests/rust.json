@@ -1,0 +1,60 @@
+{
+  "id": "rust",
+  "displayName": "Rust",
+  "icon": "\ud83c\udfd7\ufe0f",
+  "tier": "A",
+  "distribution": "steamcmd",
+  "appId": 258550,
+  "defaultDir": "rust",
+  "executable": "RustDedicated.exe",
+  "launchArgsTemplate": "-batchmode +server.hostname \"{ServerName}\" +server.port {GamePort} +server.maxplayers {MaxPlayers} +rcon.port {RconPort}",
+  "configFiles": [
+    "server/my_server_identity/cfg/server.cfg"
+  ],
+  "ports": [
+    {
+      "name": "GamePort",
+      "default": 28015,
+      "protocol": "udp"
+    },
+    {
+      "name": "RconPort",
+      "default": 28016,
+      "protocol": "tcp"
+    }
+  ],
+  "fields": [
+    {
+      "key": "ServerName",
+      "type": "string",
+      "default": "My Rust Server",
+      "required": true
+    },
+    {
+      "key": "MaxPlayers",
+      "type": "number",
+      "default": "100",
+      "required": false
+    }
+  ],
+  "cluster": {
+    "supported": false,
+    "sharedFields": [],
+    "perNodeFields": []
+  },
+  "discovery": {
+    "executables": [
+      "RustDedicated.exe"
+    ],
+    "files": [
+      "server.cfg"
+    ],
+    "folders": [
+      "rust"
+    ],
+    "confidence": 0.75
+  },
+  "notes": [
+    "Expose identity path and oxide/uMod plugin path in advanced config."
+  ]
+}

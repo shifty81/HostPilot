@@ -1,0 +1,19 @@
+{
+  "manifestId": "tmodloader",
+  "displayName": "tModLoader",
+  "executables": [
+    "start-tModLoaderServer.bat"
+  ],
+  "files": [
+    "serverconfig.txt",
+    "enabled.json"
+  ],
+  "folders": [
+    "tmodloader"
+  ],
+  "configFiles": [
+    "serverconfig.txt",
+    "Mods/enabled.json"
+  ],
+  "minimumEvidence": 2
+}
