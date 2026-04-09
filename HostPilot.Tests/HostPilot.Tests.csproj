@@ -24,5 +24,8 @@
     <ProjectReference Include="../HostPilot.Remote.Transport/HostPilot.Remote.Transport.csproj" />
     <ProjectReference Include="../HostPilot.Remote.Files/HostPilot.Remote.Files.csproj" />
     <ProjectReference Include="../HostPilot.Providers/HostPilot.Providers.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Execution/HostPilot.Remote.Execution.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Transfer/HostPilot.Remote.Transfer.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Updates/HostPilot.Remote.Updates.csproj" />
   </ItemGroup>
 </Project>
