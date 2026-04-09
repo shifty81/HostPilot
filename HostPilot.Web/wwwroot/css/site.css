@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    font-family: Segoe UI, Arial, sans-serif;
+    background: #11151b;
+    color: #e5e9f0;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: #171d26;
+    border-bottom: 1px solid #293241;
+}
+
+.brand {
+    font-weight: 700;
+}
+
+.nav a {
+    color: #d8dee9;
+    margin-left: 16px;
+    text-decoration: none;
+}
+
+.shell {
+    padding: 20px;
+}
+
+.grid, .card-list {
+    display: grid;
+    gap: 16px;
+}
+
+.grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.card {
+    background: #1b2430;
+    border: 1px solid #2d3a4d;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}

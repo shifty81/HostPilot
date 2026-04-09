@@ -1,0 +1,158 @@
+{
+  "id": "external.minecraft.java",
+  "version": "1.0.0",
+  "schemaVersion": "1.0",
+  "displayName": "Minecraft Java Server",
+  "providerType": "ExternalDownload",
+  "gameFamily": "MinecraftJava",
+  "inherits": ["external.base", "java.base"],
+  "deployment": {
+    "installStrategy": "ExternalDownload",
+    "downloadSource": "ManualOrProviderApi",
+    "defaultInstallSubpath": "Servers/MinecraftJava",
+    "defaultExecutable": "server.jar",
+    "startupMode": "JavaJar"
+  },
+  "capabilities": {
+    "supportsMods": true,
+    "supportsProfiles": true,
+    "supportsBackups": true
+  },
+  "tabs": [
+    { "id": "world", "title": "World", "order": 30 }
+  ],
+  "sections": [
+    { "id": "mcGeneral", "tabId": "general", "title": "Server Settings", "order": 20 },
+    { "id": "mcWorld", "tabId": "world", "title": "World Settings", "order": 10 }
+  ],
+  "fields": [
+    {
+      "id": "javaPath",
+      "sectionId": "javaRuntime",
+      "key": "runtime.java.path",
+      "type": "File",
+      "label": "Java Executable",
+      "required": true,
+      "order": 10
+    },
+    {
+      "id": "memoryMinMb",
+      "sectionId": "javaRuntime",
+      "key": "runtime.java.memoryMinMb",
+      "type": "Number",
+      "label": "Minimum Memory (MB)",
+      "default": 2048,
+      "min": 512,
+      "max": 65536,
+      "required": true,
+      "order": 20
+    },
+    {
+      "id": "memoryMaxMb",
+      "sectionId": "javaRuntime",
+      "key": "runtime.java.memoryMaxMb",
+      "type": "Number",
+      "label": "Maximum Memory (MB)",
+      "default": 4096,
+      "min": 512,
+      "max": 65536,
+      "required": true,
+      "order": 30
+    },
+    {
+      "id": "eulaAccepted",
+      "sectionId": "mcGeneral",
+      "key": "server.legal.eulaAccepted",
+      "type": "Checkbox",
+      "label": "Accept EULA",
+      "default": false,
+      "required": true,
+      "order": 10,
+      "output": {
+        "targets": [{ "type": "CfgKey", "file": "eula.txt", "path": "eula", "format": "lowerBoolean" }]
+      }
+    },
+    {
+      "id": "motd",
+      "sectionId": "mcGeneral",
+      "key": "server.identity.motd",
+      "type": "Text",
+      "label": "MOTD",
+      "default": "A Minecraft Server",
+      "maxLength": 200,
+      "order": 20,
+      "output": {
+        "targets": [{ "type": "CfgKey", "file": "server.properties", "path": "motd" }]
+      }
+    },
+    {
+      "id": "serverPort",
+      "sectionId": "networkPorts",
+      "key": "server.network.gamePort",
+      "type": "Port",
+      "label": "Server Port",
+      "default": 25565,
+      "required": true,
+      "order": 10,
+      "output": {
+        "targets": [{ "type": "CfgKey", "file": "server.properties", "path": "server-port" }]
+      }
+    },
+    {
+      "id": "levelName",
+      "sectionId": "mcWorld",
+      "key": "server.world.levelName",
+      "type": "Text",
+      "label": "Level Name",
+      "default": "world",
+      "required": true,
+      "order": 10,
+      "output": {
+        "targets": [{ "type": "CfgKey", "file": "server.properties", "path": "level-name" }]
+      }
+    },
+    {
+      "id": "levelSeed",
+      "sectionId": "mcWorld",
+      "key": "server.world.seed",
+      "type": "Text",
+      "label": "Level Seed",
+      "order": 20,
+      "output": {
+        "targets": [{ "type": "CfgKey", "file": "server.properties", "path": "level-seed" }]
+      }
+    }
+  ],
+  "crossFieldValidations": [
+    {
+      "id": "min-memory-lte-max-memory",
+      "rule": "runtime.java.memoryMinMb <= runtime.java.memoryMaxMb",
+      "message": "Minimum memory must be less than or equal to maximum memory.",
+      "severity": "Error"
+    },
+    {
+      "id": "eula-required",
+      "rule": "server.legal.eulaAccepted == true",
+      "message": "EULA must be accepted before deployment.",
+      "severity": "Error"
+    }
+  ],
+  "integration": {
+    "mods": {
+      "mode": "Catalog",
+      "provider": "CurseForge",
+      "supportsDependencyResolution": true,
+      "supportsZipImport": true,
+      "supportsFolderImport": true,
+      "supportsCatalogBrowser": true
+    }
+  },
+  "operations": {
+    "start": {
+      "type": "ExecutableStart",
+      "pathKey": "runtime.java.path",
+      "workingDirectoryKey": "runtime.paths.installDirectory",
+      "argumentsBuilder": "MinecraftJavaArgumentsBuilder"
+    }
+  }
+}

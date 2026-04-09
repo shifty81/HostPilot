@@ -1,3 +1,4 @@
+using HostPilot.Remote.Agent.Handlers;
 using HostPilot.Remote.Agent.Options;
 using HostPilot.Remote.Agent.Services;
 using HostPilot.Remote.Transport.Abstractions;
@@ -13,6 +14,10 @@ builder.Services.AddSingleton<IEnvelopeValidator, DevelopmentEnvelopeValidator>(
 builder.Services.AddSingleton<AgentNodeIdentityProvider>();
 builder.Services.AddSingleton<AgentHealthSampler>();
 builder.Services.AddSingleton<AgentCommandRegistry>();
+builder.Services.AddSingleton<IAgentCommandHandler, StartServerHandler>();
+builder.Services.AddSingleton<IAgentCommandHandler, StopServerHandler>();
+builder.Services.AddSingleton<IAgentCommandHandler, BackupServerHandler>();
+builder.Services.AddSingleton<AgentCommandDispatcher>();
 builder.Services.AddHostedService<AgentWorkerService>();
 
 var app = builder.Build();

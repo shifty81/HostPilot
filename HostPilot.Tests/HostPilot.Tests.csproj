@@ -18,9 +18,15 @@
     <ProjectReference Include="../HostPilot.Core/HostPilot.Core.csproj" />
     <ProjectReference Include="../HostPilot.Core.Execution/HostPilot.Core.Execution.csproj" />
     <ProjectReference Include="../HostPilot.Security/HostPilot.Security.csproj" />
+    <ProjectReference Include="../HostPilot.Telemetry/HostPilot.Telemetry.csproj" />
     <ProjectReference Include="../HostPilot.Runtime/HostPilot.Runtime.csproj" />
     <ProjectReference Include="../HostPilot.Contracts/HostPilot.Contracts.csproj" />
     <ProjectReference Include="../HostPilot.Remote.Contracts/HostPilot.Remote.Contracts.csproj" />
     <ProjectReference Include="../HostPilot.Remote.Transport/HostPilot.Remote.Transport.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Files/HostPilot.Remote.Files.csproj" />
+    <ProjectReference Include="../HostPilot.Providers/HostPilot.Providers.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Execution/HostPilot.Remote.Execution.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Transfer/HostPilot.Remote.Transfer.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Updates/HostPilot.Remote.Updates.csproj" />
   </ItemGroup>
 </Project>

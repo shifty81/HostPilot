@@ -1,0 +1,169 @@
+{
+  "id": "steam.rust",
+  "version": "1.0.0",
+  "schemaVersion": "1.0",
+  "displayName": "Rust Dedicated Server",
+  "providerType": "SteamCmd",
+  "gameFamily": "Rust",
+  "inherits": ["steam.base"],
+  "deployment": {
+    "installStrategy": "SteamCmdAppId",
+    "steamAppId": 258550,
+    "anonymousLogin": true,
+    "defaultInstallSubpath": "Servers/Rust",
+    "defaultExecutable": "RustDedicated.exe",
+    "workingDirectory": "server",
+    "startupMode": "ExecutableWithArgs"
+  },
+  "capabilities": {
+    "supportsRcon": true,
+    "supportsQuery": true,
+    "supportsMods": true,
+    "supportsBackups": true
+  },
+  "tabs": [
+    { "id": "world", "title": "World", "order": 30 },
+    { "id": "rcon", "title": "RCON", "order": 40 }
+  ],
+  "sections": [
+    { "id": "serverIdentity", "tabId": "general", "title": "Server Identity", "order": 20 },
+    { "id": "worldSettings", "tabId": "world", "title": "World Settings", "order": 10 },
+    { "id": "rconSettings", "tabId": "rcon", "title": "RCON Settings", "order": 10 }
+  ],
+  "fields": [
+    {
+      "id": "serverName",
+      "sectionId": "serverIdentity",
+      "key": "server.identity.name",
+      "type": "Text",
+      "label": "Server Name",
+      "default": "My Rust Server",
+      "required": true,
+      "minLength": 3,
+      "maxLength": 80,
+      "order": 10,
+      "output": { "targets": [{ "type": "LaunchArg", "argName": "+server.hostname" }] }
+    },
+    {
+      "id": "worldSeed",
+      "sectionId": "worldSettings",
+      "key": "server.world.seed",
+      "type": "Text",
+      "label": "World Seed",
+      "default": "12345",
+      "required": true,
+      "order": 10,
+      "output": { "targets": [{ "type": "LaunchArg", "argName": "+server.seed" }] }
+    },
+    {
+      "id": "worldSize",
+      "sectionId": "worldSettings",
+      "key": "server.world.size",
+      "type": "Number",
+      "label": "World Size",
+      "default": 4000,
+      "min": 1000,
+      "max": 6000,
+      "required": true,
+      "order": 20,
+      "output": { "targets": [{ "type": "LaunchArg", "argName": "+server.worldsize" }] }
+    },
+    {
+      "id": "queryPort",
+      "sectionId": "networkPorts",
+      "key": "server.network.queryPort",
+      "type": "Port",
+      "label": "Query Port",
+      "default": 28016,
+      "required": true,
+      "order": 20,
+      "output": { "targets": [{ "type": "LaunchArg", "argName": "+server.queryport" }] }
+    },
+    {
+      "id": "rconEnabled",
+      "sectionId": "rconSettings",
+      "key": "server.rcon.enabled",
+      "type": "Checkbox",
+      "label": "Enable RCON",
+      "default": true,
+      "order": 10
+    },
+    {
+      "id": "rconPort",
+      "sectionId": "rconSettings",
+      "key": "server.rcon.port",
+      "type": "Port",
+      "label": "RCON Port",
+      "default": 28017,
+      "requiredWhen": {
+        "logic": "And",
+        "conditions": [{ "path": "server.rcon.enabled", "operator": "Equals", "value": true }]
+      },
+      "visibleWhen": {
+        "logic": "And",
+        "conditions": [{ "path": "server.rcon.enabled", "operator": "Equals", "value": true }]
+      },
+      "order": 20,
+      "output": { "targets": [{ "type": "LaunchArg", "argName": "+rcon.port" }] }
+    },
+    {
+      "id": "rconPassword",
+      "sectionId": "rconSettings",
+      "key": "server.rcon.password",
+      "type": "Password",
+      "label": "RCON Password",
+      "requiredWhen": {
+        "logic": "And",
+        "conditions": [{ "path": "server.rcon.enabled", "operator": "Equals", "value": true }]
+      },
+      "visibleWhen": {
+        "logic": "And",
+        "conditions": [{ "path": "server.rcon.enabled", "operator": "Equals", "value": true }]
+      },
+      "order": 30,
+      "output": { "targets": [{ "type": "LaunchArg", "argName": "+rcon.password" }] }
+    }
+  ],
+  "crossFieldValidations": [
+    {
+      "id": "query-port-differs-from-game-port",
+      "rule": "server.network.queryPort != server.network.gamePort",
+      "message": "Query port must differ from game port.",
+      "severity": "Error"
+    },
+    {
+      "id": "rcon-port-differs-from-game-port",
+      "rule": "server.rcon.port != server.network.gamePort",
+      "message": "RCON port must differ from game port.",
+      "severity": "Error"
+    }
+  ],
+  "presets": [
+    {
+      "id": "small-private",
+      "title": "Small Private Server",
+      "description": "Basic private Rust server configuration.",
+      "order": 10,
+      "overrides": {
+        "server.identity.name": "Private Rust Server",
+        "server.world.size": 3000
+      }
+    }
+  ],
+  "operations": {
+    "install": { "type": "SteamCmdInstall", "appId": 258550 },
+    "update": { "type": "SteamCmdUpdate", "appId": 258550 },
+    "start": {
+      "type": "ExecutableStart",
+      "pathKey": "runtime.paths.executable",
+      "workingDirectoryKey": "runtime.paths.installDirectory",
+      "argumentsBuilder": "RustArgumentsBuilder"
+    },
+    "stop": { "type": "RconStop", "rconCommand": "quit" }
+  },
+  "detection": {
+    "strategy": "DirectoryProbeAndConfigParse",
+    "executableNames": ["RustDedicated.exe"],
+    "installMarkers": ["steamapps/appmanifest_258550.acf"]
+  }
+}

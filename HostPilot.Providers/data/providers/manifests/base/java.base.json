@@ -1,0 +1,15 @@
+{
+  "id": "java.base",
+  "version": "1.0.0",
+  "schemaVersion": "1.0",
+  "displayName": "Java Base",
+  "providerType": "ExternalDownload",
+  "gameFamily": "Base",
+  "tabs": [
+    { "id": "java", "title": "Java", "order": 15 }
+  ],
+  "sections": [
+    { "id": "javaRuntime", "tabId": "java", "title": "Runtime", "order": 10 }
+  ],
+  "fields": []
+}

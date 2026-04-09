@@ -37,8 +37,12 @@ public sealed class ModPackageCatalogService : IModCatalogService
     {
         var results = new List<ModPackage>();
 
-        foreach (var sourcePath in request.SourcePaths.Where(File.Exists))
+        foreach (var rawPath in request.SourcePaths)
         {
+            var sourcePath = SafeResolvePath(rawPath);
+            if (sourcePath is null || !File.Exists(sourcePath))
+                continue;
+
             var package = new ModPackage
             {
                 ProviderId = "local",
@@ -61,8 +65,12 @@ public sealed class ModPackageCatalogService : IModCatalogService
             results.Add(package);
         }
 
-        foreach (var sourcePath in request.SourcePaths.Where(Directory.Exists))
+        foreach (var rawDir in request.SourcePaths)
         {
+            var sourcePath = SafeResolvePath(rawDir);
+            if (sourcePath is null || !Directory.Exists(sourcePath))
+                continue;
+
             results.Add(new ModPackage
             {
                 ProviderId = "local",
@@ -76,6 +84,32 @@ public sealed class ModPackageCatalogService : IModCatalogService
         }
 
         return Task.FromResult<IReadOnlyList<ModPackage>>(results);
+    }
+
+    /// <summary>
+    /// Resolves <paramref name="rawPath"/> to an absolute, canonical path.
+    /// Returns <see langword="null"/> if the value is null, empty, or contains
+    /// invalid characters (including null bytes that could bypass OS-level checks).
+    /// </summary>
+    private static string? SafeResolvePath(string? rawPath)
+    {
+        if (string.IsNullOrWhiteSpace(rawPath))
+            return null;
+
+        // Reject embedded null bytes which some OS implementations ignore after this point
+        if (rawPath.Contains('\0'))
+            return null;
+
+        try
+        {
+            var full = Path.GetFullPath(rawPath);
+            // Path must be absolute after resolution
+            return Path.IsPathRooted(full) ? full : null;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     private static string ComputeHash(string path)

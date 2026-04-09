@@ -1,0 +1,28 @@
+{
+  "id": "external.base",
+  "version": "1.0.0",
+  "schemaVersion": "1.0",
+  "displayName": "External Base",
+  "providerType": "ExternalDownload",
+  "gameFamily": "Base",
+  "tabs": [
+    { "id": "general", "title": "General", "order": 10 },
+    { "id": "network", "title": "Network", "order": 20 },
+    { "id": "advanced", "title": "Advanced", "order": 100, "advanced": true }
+  ],
+  "sections": [
+    { "id": "installPaths", "tabId": "general", "title": "Install Paths", "order": 10 },
+    { "id": "networkPorts", "tabId": "network", "title": "Ports", "order": 10 }
+  ],
+  "fields": [
+    {
+      "id": "installDirectory",
+      "sectionId": "installPaths",
+      "key": "runtime.paths.installDirectory",
+      "type": "Folder",
+      "label": "Install Directory",
+      "required": true,
+      "order": 10
+    }
+  ]
+}
