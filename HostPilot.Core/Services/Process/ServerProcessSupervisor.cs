@@ -56,8 +56,11 @@ public sealed class ServerProcessSupervisor
 
         onLog?.Invoke($"Started server PID {_currentProcess.Id}.");
 
-        _ = PumpOutputAsync(_currentProcess.StandardOutput, onLog, cancellationToken);
-        _ = PumpOutputAsync(_currentProcess.StandardError, onLog, cancellationToken);
+        var stdoutTask = PumpOutputAsync(_currentProcess.StandardOutput, onLog, cancellationToken);
+        var stderrTask = PumpOutputAsync(_currentProcess.StandardError, onLog, cancellationToken);
+        // Register pump tasks so unobserved exceptions are handled inside PumpOutputAsync
+        _ = stdoutTask;
+        _ = stderrTask;
         await Task.CompletedTask;
     }
 
@@ -120,11 +123,22 @@ public sealed class ServerProcessSupervisor
 
     private static async Task PumpOutputAsync(StreamReader reader, Action<string>? onLog, CancellationToken cancellationToken)
     {
-        while (!reader.EndOfStream && !cancellationToken.IsCancellationRequested)
+        try
         {
-            var line = await reader.ReadLineAsync(cancellationToken);
-            if (line is null) break;
-            onLog?.Invoke(line);
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var line = await reader.ReadLineAsync(cancellationToken);
+                if (line is null) break;
+                onLog?.Invoke(line);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Normal shutdown - cancellation was requested
+        }
+        catch (Exception ex)
+        {
+            onLog?.Invoke($"[output pump error] {ex.Message}");
         }
     }
 }

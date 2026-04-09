@@ -33,7 +33,7 @@ public sealed class ValidateServerOperationHandler(SteamCmdRunner steamCmd) : IO
             AppId = appId
         };
 
-        var logs = new List<string>();
+        var logs = new System.Collections.Concurrent.ConcurrentBag<string>();
         var result = await steamCmd.RunAsync(
             profile,
             SteamCmdJobKind.Validate,

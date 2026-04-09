@@ -1,0 +1,20 @@
+@page
+@model HostPilot.Web.Pages.LiveModel
+@{
+    ViewData["Title"] = "Live Events";
+}
+<div class="card">
+    <h1>Live Events</h1>
+    <p>SignalR client wiring for live node logs, alerts, and operation updates goes here.</p>
+    <pre id="feed">waiting for events...</pre>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+<script>
+const feed = document.getElementById('feed');
+const connection = new signalR.HubConnectionBuilder().withUrl('/hubs/runtime-events').build();
+connection.start().then(() => {
+  feed.textContent = 'connected';
+}).catch(err => {
+  feed.textContent = 'connection failed: ' + err;
+});
+</script>

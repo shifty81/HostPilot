@@ -1,0 +1,18 @@
+@page
+@model HostPilot.Web.Pages.NodesModel
+@{
+    ViewData["Title"] = "Nodes";
+}
+<h1>Nodes</h1>
+<div class="card-list">
+@foreach (var node in Model.Nodes)
+{
+    <article class="card">
+        <h2>@node.DisplayName</h2>
+        <p><strong>Node:</strong> @node.NodeId</p>
+        <p><strong>Machine:</strong> @node.MachineName</p>
+        <p><strong>Env:</strong> @node.EnvironmentName</p>
+        <p><strong>Tags:</strong> @string.Join(", ", node.Tags)</p>
+    </article>
+}
+</div>

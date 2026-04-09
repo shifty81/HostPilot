@@ -37,8 +37,21 @@ public sealed class ModPackageCatalogService : IModCatalogService
     {
         var results = new List<ModPackage>();
 
-        foreach (var sourcePath in request.SourcePaths.Where(File.Exists))
+        foreach (var rawPath in request.SourcePaths)
         {
+            // Canonicalize and validate path to prevent directory traversal
+            string sourcePath;
+            try
+            {
+                sourcePath = Path.GetFullPath(rawPath);
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+
+            if (!File.Exists(sourcePath))
+                continue;
             var package = new ModPackage
             {
                 ProviderId = "local",
@@ -61,8 +74,15 @@ public sealed class ModPackageCatalogService : IModCatalogService
             results.Add(package);
         }
 
-        foreach (var sourcePath in request.SourcePaths.Where(Directory.Exists))
+        foreach (var rawDir in request.SourcePaths)
         {
+            string sourcePath;
+            try { sourcePath = Path.GetFullPath(rawDir); }
+            catch (Exception) { continue; }
+
+            if (!Directory.Exists(sourcePath))
+                continue;
+
             results.Add(new ModPackage
             {
                 ProviderId = "local",
