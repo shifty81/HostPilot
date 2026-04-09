@@ -1,0 +1,35 @@
+<UserControl x:Class="HostPilot.Views.MultiNodeRolloutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Multi-Node Rollout" FontSize="18" FontWeight="Bold" Margin="0,0,0,8" />
+
+        <GroupBox Grid.Row="1" Header="Waves" Margin="0,0,0,8">
+            <DataGrid ItemsSource="{Binding Waves}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Wave" Binding="{Binding WaveName}" Width="2*"/>
+                    <DataGridTextColumn Header="Concurrency" Binding="{Binding Concurrency}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Approval" Binding="{Binding RequiresApproval}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="Node Progress">
+            <DataGrid ItemsSource="{Binding ActiveNodes}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Node" Binding="{Binding NodeId}" Width="2*"/>
+                    <DataGridTextColumn Header="Deployment" Binding="{Binding Deployment}" Width="2*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                    <DataGridTextColumn Header="Percent" Binding="{Binding Percent}" Width="*"/>
+                    <DataGridTextColumn Header="Updated" Binding="{Binding UpdatedUtc}" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</UserControl>

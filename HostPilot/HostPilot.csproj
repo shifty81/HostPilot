@@ -22,6 +22,7 @@
     <ProjectReference Include="../HostPilot.Telemetry/HostPilot.Telemetry.csproj" />
     <ProjectReference Include="../HostPilot.Contracts/HostPilot.Contracts.csproj" />
     <ProjectReference Include="../HostPilot.Remote.Contracts/HostPilot.Remote.Contracts.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Files/HostPilot.Remote.Files.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="servers.json">
