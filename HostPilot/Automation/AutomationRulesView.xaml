@@ -1,0 +1,42 @@
+<UserControl x:Class="HostPilot.Automation.AutomationRulesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <Border CornerRadius="8" Padding="12">
+            <DockPanel>
+                <TextBlock Text="Automation Rules"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           DockPanel.Dock="Top"
+                           Margin="0,0,0,12" />
+                <ListBox ItemsSource="{Binding Rules}"
+                         SelectedItem="{Binding SelectedRule}"
+                         DisplayMemberPath="Name" />
+            </DockPanel>
+        </Border>
+
+        <Border Grid.Column="2" CornerRadius="8" Padding="12">
+            <StackPanel>
+                <TextBlock Text="Rule Details"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,12" />
+                <TextBlock Text="Name" />
+                <TextBox Text="{Binding SelectedRule.Name}" Margin="0,4,0,8" />
+                <TextBlock Text="Description" />
+                <TextBox Text="{Binding SelectedRule.Description}" AcceptsReturn="True" Height="80" Margin="0,4,0,8" />
+                <CheckBox Content="Enabled" IsChecked="{Binding SelectedRule.IsEnabled}" />
+                <CheckBox Content="Require maintenance window" IsChecked="{Binding SelectedRule.RequireMaintenanceWindow}" Margin="0,8,0,0" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

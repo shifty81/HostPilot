@@ -1,0 +1,39 @@
+<UserControl x:Class="HostPilot.Views.RemoteNodeBrowserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Padding="12" Margin="0,0,12,0">
+            <StackPanel>
+                <TextBlock Text="Remote Nodes" FontSize="18" FontWeight="Bold" Margin="0,0,0,12" />
+                <ListBox ItemsSource="{Binding Nodes}" SelectedItem="{Binding SelectedNode}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,6">
+                                <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding NodeId}" Opacity="0.7" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Padding="12">
+            <StackPanel>
+                <TextBlock Text="Node Detail" FontSize="18" FontWeight="Bold" Margin="0,0,0,12" />
+                <TextBlock Text="{Binding SelectedNode.DisplayName}" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding SelectedNode.NodeId}" Margin="0,4,0,0" />
+                <TextBlock Text="{Binding SelectedNode.MachineName}" Margin="0,4,0,0" />
+                <TextBlock Text="{Binding SelectedNode.Platform}" Margin="0,4,0,0" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,225 @@
+<UserControl x:Class="HostPilot.Views.DynamicForms.DynamicManifestFormHost"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:HostPilot.ViewModels.DynamicForms"
+             xmlns:controls="clr-namespace:HostPilot.Controls.DynamicForms"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+
+        <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,0,0,4" />
+        </Style>
+
+        <Style x:Key="FieldDescriptionStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#A8A8A8" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,4,0,0" />
+        </Style>
+
+        <Style x:Key="FieldErrorStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF8585" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Margin" Value="0,4,0,0" />
+        </Style>
+
+        <Style x:Key="CardBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#181818" />
+            <Setter Property="BorderBrush" Value="#242424" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="14" />
+            <Setter Property="Margin" Value="0,0,0,12" />
+        </Style>
+
+        <DataTemplate x:Key="TextFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding IsEnabled}"
+                     Padding="8" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="PasswordFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding IsEnabled}"
+                     Padding="8" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="MultilineFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding IsEnabled}"
+                     Padding="8"
+                     MinHeight="110"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     TextWrapping="Wrap" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="NumberFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <controls:NumberFieldControl />
+        </DataTemplate>
+
+        <DataTemplate x:Key="CheckboxFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <CheckBox IsChecked="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                      IsEnabled="{Binding IsEnabled}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="DropdownFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <ComboBox ItemsSource="{Binding Options}"
+                      DisplayMemberPath="Label"
+                      SelectedValuePath="Value"
+                      SelectedValue="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                      IsEnabled="{Binding IsEnabled}"
+                      MinWidth="240" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="FolderFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <controls:FolderPickerFieldControl />
+        </DataTemplate>
+
+        <DataTemplate x:Key="FileFieldTemplate" DataType="{x:Type vm:FieldViewModel}">
+            <controls:FilePickerFieldControl />
+        </DataTemplate>
+
+        <controls:FieldTemplateSelector x:Key="FieldTemplateSelector"
+                                        TextTemplate="{StaticResource TextFieldTemplate}"
+                                        MultilineTemplate="{StaticResource MultilineFieldTemplate}"
+                                        NumberTemplate="{StaticResource NumberFieldTemplate}"
+                                        CheckboxTemplate="{StaticResource CheckboxFieldTemplate}"
+                                        DropdownTemplate="{StaticResource DropdownFieldTemplate}"
+                                        PasswordTemplate="{StaticResource PasswordFieldTemplate}"
+                                        FileTemplate="{StaticResource FileFieldTemplate}"
+                                        FolderTemplate="{StaticResource FolderFieldTemplate}" />
+    </UserControl.Resources>
+
+    <Grid Background="#101010">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="220" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="16,16,16,12" LastChildFill="False">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <Button Content="Validate"
+                        Command="{Binding ValidateCommand}"
+                        Padding="12,8"
+                        Margin="0,0,8,0" />
+                <Button Content="Reset Defaults"
+                        Command="{Binding ResetToDefaultsCommand}"
+                        Padding="12,8"
+                        Margin="0,0,8,0" />
+                <Button Content="Export JSON"
+                        Command="{Binding ExportJsonCommand}"
+                        Padding="12,8" />
+            </StackPanel>
+
+            <Border DockPanel.Dock="Right"
+                    Padding="10,6"
+                    CornerRadius="6"
+                    Background="#2A1616"
+                    Visibility="{Binding HasErrors, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="Validation errors present"
+                           Foreground="#FF9494"
+                           FontWeight="SemiBold" />
+            </Border>
+        </DockPanel>
+
+        <TabControl Grid.Row="1"
+                    Margin="16,0,16,12"
+                    Background="#121212"
+                    BorderBrush="#292929"
+                    ItemsSource="{Binding Tabs}"
+                    SelectedItem="{Binding SelectedTab}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type vm:FormTabViewModel}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Fields}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:FieldViewModel}">
+                                    <Border Style="{StaticResource CardBorderStyle}"
+                                            Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <DockPanel Grid.Row="0" LastChildFill="False">
+                                                <TextBlock Text="{Binding Label}"
+                                                           Style="{StaticResource FieldLabelStyle}"
+                                                           DockPanel.Dock="Left" />
+                                                <TextBlock Text="{Binding Group}"
+                                                           Foreground="#7D7D7D"
+                                                           FontSize="11"
+                                                           VerticalAlignment="Bottom"
+                                                           DockPanel.Dock="Right" />
+                                            </DockPanel>
+
+                                            <ContentControl Grid.Row="1"
+                                                            Margin="0,4,0,0"
+                                                            Content="{Binding}"
+                                                            ContentTemplateSelector="{StaticResource FieldTemplateSelector}" />
+
+                                            <TextBlock Grid.Row="2"
+                                                       Text="{Binding Description}"
+                                                       Style="{StaticResource FieldDescriptionStyle}" />
+
+                                            <TextBlock Grid.Row="3"
+                                                       Text="{Binding ValidationError}"
+                                                       Style="{StaticResource FieldErrorStyle}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+        <Border Grid.Row="2"
+                Margin="16,0,16,16"
+                Background="#171717"
+                BorderBrush="#282828"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="12">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Export Preview"
+                           Foreground="White"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,8" />
+
+                <TextBox Grid.Row="1"
+                         Text="{Binding ExportedJson}"
+                         Foreground="White"
+                         Background="#101010"
+                         BorderBrush="#2C2C2C"
+                         AcceptsReturn="True"
+                         IsReadOnly="True"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         TextWrapping="NoWrap" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

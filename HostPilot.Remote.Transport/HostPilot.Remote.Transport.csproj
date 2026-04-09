@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>HostPilot.Remote.Transport</RootNamespace>
+    <AssemblyName>HostPilot.Remote.Transport</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HostPilot.Remote.Contracts/HostPilot.Remote.Contracts.csproj" />
+  </ItemGroup>
+</Project>
