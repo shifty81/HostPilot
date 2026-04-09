@@ -39,19 +39,10 @@ public sealed class ModPackageCatalogService : IModCatalogService
 
         foreach (var rawPath in request.SourcePaths)
         {
-            // Canonicalize and validate path to prevent directory traversal
-            string sourcePath;
-            try
-            {
-                sourcePath = Path.GetFullPath(rawPath);
-            }
-            catch (Exception)
-            {
+            var sourcePath = SafeResolvePath(rawPath);
+            if (sourcePath is null || !File.Exists(sourcePath))
                 continue;
-            }
 
-            if (!File.Exists(sourcePath))
-                continue;
             var package = new ModPackage
             {
                 ProviderId = "local",
@@ -76,11 +67,8 @@ public sealed class ModPackageCatalogService : IModCatalogService
 
         foreach (var rawDir in request.SourcePaths)
         {
-            string sourcePath;
-            try { sourcePath = Path.GetFullPath(rawDir); }
-            catch (Exception) { continue; }
-
-            if (!Directory.Exists(sourcePath))
+            var sourcePath = SafeResolvePath(rawDir);
+            if (sourcePath is null || !Directory.Exists(sourcePath))
                 continue;
 
             results.Add(new ModPackage
@@ -96,6 +84,32 @@ public sealed class ModPackageCatalogService : IModCatalogService
         }
 
         return Task.FromResult<IReadOnlyList<ModPackage>>(results);
+    }
+
+    /// <summary>
+    /// Resolves <paramref name="rawPath"/> to an absolute, canonical path.
+    /// Returns <see langword="null"/> if the value is null, empty, or contains
+    /// invalid characters (including null bytes that could bypass OS-level checks).
+    /// </summary>
+    private static string? SafeResolvePath(string? rawPath)
+    {
+        if (string.IsNullOrWhiteSpace(rawPath))
+            return null;
+
+        // Reject embedded null bytes which some OS implementations ignore after this point
+        if (rawPath.Contains('\0'))
+            return null;
+
+        try
+        {
+            var full = Path.GetFullPath(rawPath);
+            // Path must be absolute after resolution
+            return Path.IsPathRooted(full) ? full : null;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     private static string ComputeHash(string path)
