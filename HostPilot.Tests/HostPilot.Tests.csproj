@@ -18,6 +18,7 @@
     <ProjectReference Include="../HostPilot.Core/HostPilot.Core.csproj" />
     <ProjectReference Include="../HostPilot.Core.Execution/HostPilot.Core.Execution.csproj" />
     <ProjectReference Include="../HostPilot.Security/HostPilot.Security.csproj" />
+    <ProjectReference Include="../HostPilot.Telemetry/HostPilot.Telemetry.csproj" />
     <ProjectReference Include="../HostPilot.Runtime/HostPilot.Runtime.csproj" />
     <ProjectReference Include="../HostPilot.Contracts/HostPilot.Contracts.csproj" />
     <ProjectReference Include="../HostPilot.Remote.Contracts/HostPilot.Remote.Contracts.csproj" />
