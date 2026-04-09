@@ -133,52 +133,79 @@ public class SteamCmdService
 
     private async Task<bool> RunSteamCmd(string args, IProgress<string>? progress)
     {
-        AppLogger.Info($"Running SteamCMD: {SteamCmdPath} {args}");
-        var psi = new SysProcessStartInfo
-        {
-            FileName = SteamCmdPath,
-            Arguments = args,
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            CreateNoWindow = true
-        };
+        // SteamCMD's first launch after install (or a long gap) always triggers a
+        // self-update that exits with a non-zero code (commonly 7) before the
+        // requested action actually runs.  Re-running the same command immediately
+        // after the self-update succeeds reliably, so we retry once automatically.
+        const int maxAttempts = 2;
 
-        using var process = new SysProcess { StartInfo = psi };
-
-        process.OutputDataReceived += (_, e) =>
+        for (int attempt = 1; attempt <= maxAttempts; attempt++)
         {
-            if (e.Data != null)
+            AppLogger.Info($"Running SteamCMD (attempt {attempt}): {SteamCmdPath} {args}");
+            var psi = new SysProcessStartInfo
             {
-                AppLogger.Info($"[SteamCMD] {e.Data}");
-                progress?.Report(e.Data);
-            }
-        };
+                FileName = SteamCmdPath,
+                Arguments = args,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
 
-        process.ErrorDataReceived += (_, e) =>
-        {
-            if (e.Data != null)
+            using var process = new SysProcess { StartInfo = psi };
+
+            process.OutputDataReceived += (_, e) =>
             {
-                AppLogger.Warn($"[SteamCMD ERR] {e.Data}");
-                progress?.Report($"[ERR] {e.Data}");
-            }
-        };
+                if (e.Data != null)
+                {
+                    AppLogger.Info($"[SteamCMD] {e.Data}");
+                    progress?.Report(e.Data);
+                }
+            };
 
-        try
-        {
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            await process.WaitForExitAsync();
-            var success = process.ExitCode == 0;
-            AppLogger.Info($"SteamCMD finished with exit code {process.ExitCode} ({(success ? "OK" : "FAILED")}).");
-            return success;
+            process.ErrorDataReceived += (_, e) =>
+            {
+                if (e.Data != null)
+                {
+                    AppLogger.Warn($"[SteamCMD ERR] {e.Data}");
+                    progress?.Report($"[ERR] {e.Data}");
+                }
+            };
+
+            try
+            {
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                await process.WaitForExitAsync();
+
+                if (process.ExitCode == 0)
+                {
+                    AppLogger.Info($"SteamCMD finished with exit code 0 (OK) on attempt {attempt}.");
+                    return true;
+                }
+
+                AppLogger.Warn($"SteamCMD exited with code {process.ExitCode} on attempt {attempt}.");
+
+                if (attempt < maxAttempts)
+                {
+                    progress?.Report($"SteamCMD exited with code {process.ExitCode} (likely self-update). Retrying…");
+                }
+                else
+                {
+                    AppLogger.Error($"SteamCMD failed after {maxAttempts} attempt(s) with exit code {process.ExitCode}.");
+                    progress?.Report($"SteamCMD failed with exit code {process.ExitCode} after {maxAttempts} attempt(s).");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Failed to run SteamCMD: {ex}");
+                progress?.Report($"Error running steamcmd: {ex.Message}");
+                return false;
+            }
         }
-        catch (Exception ex)
-        {
-            AppLogger.Error($"Failed to run SteamCMD: {ex}");
-            progress?.Report($"Error running steamcmd: {ex.Message}");
-            return false;
-        }
+
+        return false;
     }
 }
