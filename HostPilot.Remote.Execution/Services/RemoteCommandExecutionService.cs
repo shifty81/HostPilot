@@ -25,7 +25,7 @@ public sealed class RemoteCommandExecutionService
 
     public async Task<RemoteExecutionResult> ExecuteAsync(RemoteExecutionRequest request, CancellationToken cancellationToken = default)
     {
-        if (!_catalog.TryGet(request.CommandKey, out var descriptor))
+        if (!_catalog.TryGet(request.CommandKey, out var descriptor) || descriptor is null)
         {
             throw new KeyNotFoundException($"Unknown command '{request.CommandKey}'.");
         }

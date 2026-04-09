@@ -1,10 +1,11 @@
 namespace HostPilot.Remote.Execution.Services;
 
+using System.Collections.Frozen;
 using HostPilot.Remote.Contracts.Models;
 
 public sealed class RemoteCommandCatalog
 {
-    private readonly Dictionary<string, RemoteCommandDescriptor> _commands = new(StringComparer.OrdinalIgnoreCase)
+    private readonly FrozenDictionary<string, RemoteCommandDescriptor> _commands = new Dictionary<string, RemoteCommandDescriptor>(StringComparer.OrdinalIgnoreCase)
     {
         ["server.install"] = new() { CommandKey = "server.install", DisplayName = "Install Server", HandlerKey = "install", RiskLevel = "Medium" },
         ["server.start"] = new() { CommandKey = "server.start", DisplayName = "Start Server", HandlerKey = "start", RiskLevel = "Low" },
@@ -12,8 +13,8 @@ public sealed class RemoteCommandCatalog
         ["server.restart"] = new() { CommandKey = "server.restart", DisplayName = "Restart Server", HandlerKey = "restart", RiskLevel = "Medium" },
         ["server.backup.create"] = new() { CommandKey = "server.backup.create", DisplayName = "Create Backup", HandlerKey = "backup", RiskLevel = "Low" },
         ["node.agent.restart"] = new() { CommandKey = "node.agent.restart", DisplayName = "Restart Agent", HandlerKey = "agent-restart", RiskLevel = "High" },
-    };
+    }.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
 
-    public bool TryGet(string commandKey, out RemoteCommandDescriptor descriptor) => _commands.TryGetValue(commandKey, out descriptor!);
+    public bool TryGet(string commandKey, out RemoteCommandDescriptor? descriptor) => _commands.TryGetValue(commandKey, out descriptor);
     public IReadOnlyCollection<RemoteCommandDescriptor> GetAll() => _commands.Values.ToArray();
 }
