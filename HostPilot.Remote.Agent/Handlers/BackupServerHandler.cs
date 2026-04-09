@@ -4,7 +4,7 @@ namespace HostPilot.Remote.Agent.Handlers;
 
 public sealed class BackupServerHandler : IAgentCommandHandler
 {
-    public string CommandType => "server.backup";
+    public string CommandType => "server.backup.create";
 
     public async Task<AgentCommandResult> HandleAsync(AgentCommandContext context, CancellationToken cancellationToken)
     {
