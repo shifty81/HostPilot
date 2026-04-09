@@ -92,6 +92,7 @@ public partial class MainWindow : Window
 
         _serverManager.ServerStatusChanged += OnServerStatusChanged;
         _serverManager.ServerCrashed       += OnServerCrashed;
+        _serverManager.ServerOutputReceived += OnServerOutputReceived;
 
         _refreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
         _refreshTimer.Tick += (_, _) => RefreshStatus();
@@ -369,6 +370,19 @@ public partial class MainWindow : Window
                 var body = GitHubIssueReporter.FormatServerCrashReport(e.ServerName, e.ExitCode);
                 GitHubIssueReporter.OpenNewIssue(
                     $"[Crash] {e.ServerName} exited with code {e.ExitCode}", body);
+            }
+        });
+    }
+
+    private void OnServerOutputReceived(object? sender, ServerOutputEventArgs e)
+    {
+        Dispatcher.InvokeAsync(() =>
+        {
+            // Only display output for the currently selected server.
+            if (_selectedConfig != null && e.ServerName == _selectedConfig.Name)
+            {
+                var prefix = e.IsError ? "[ERR] " : "";
+                AppendConsole($"{prefix}{e.Text}");
             }
         });
     }

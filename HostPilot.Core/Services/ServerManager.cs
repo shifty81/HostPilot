@@ -37,6 +37,20 @@ public class ServerCrashedEventArgs : EventArgs
     }
 }
 
+public class ServerOutputEventArgs : EventArgs
+{
+    public string ServerName { get; }
+    public string Text { get; }
+    public bool IsError { get; }
+
+    public ServerOutputEventArgs(string serverName, string text, bool isError)
+    {
+        ServerName = serverName;
+        Text = text;
+        IsError = isError;
+    }
+}
+
 public class ServerManager
 {
     private readonly Dictionary<string, SysProcess>       _processes    = new();
@@ -51,6 +65,7 @@ public class ServerManager
 
     public event EventHandler<ServerStatusChangedEventArgs>? ServerStatusChanged;
     public event EventHandler<ServerCrashedEventArgs>? ServerCrashed;
+    public event EventHandler<ServerOutputEventArgs>? ServerOutputReceived;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -175,12 +190,25 @@ public class ServerManager
             RedirectStandardOutput = true,
             RedirectStandardError  = true,
             RedirectStandardInput  = useStdin,
+            CreateNoWindow         = true,
         };
 
         foreach (var kv in config.EnvironmentVariables)
             psi.EnvironmentVariables[kv.Key] = kv.Value;
 
         var process = new SysProcess { StartInfo = psi, EnableRaisingEvents = true };
+
+        process.OutputDataReceived += (_, e) =>
+        {
+            if (e.Data != null)
+                ServerOutputReceived?.Invoke(this, new ServerOutputEventArgs(config.Name, e.Data, isError: false));
+        };
+
+        process.ErrorDataReceived += (_, e) =>
+        {
+            if (e.Data != null)
+                ServerOutputReceived?.Invoke(this, new ServerOutputEventArgs(config.Name, e.Data, isError: true));
+        };
 
         process.Exited += (_, _) =>
         {

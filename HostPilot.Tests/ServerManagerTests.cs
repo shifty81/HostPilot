@@ -279,4 +279,34 @@ public class ServerManagerTests : IDisposable
         Assert.Equal("say hello", manager2.Servers[0].ScheduledRconCommands[0].Command);
         Assert.Equal(30, manager2.Servers[0].ScheduledRconCommands[0].IntervalMinutes);
     }
+
+    // ─── ServerOutputEventArgs ────────────────────────────────────────────
+    [Fact]
+    public void ServerOutputEventArgs_StoresProperties()
+    {
+        var args = new ServerOutputEventArgs("MyServer", "Hello World", isError: false);
+        Assert.Equal("MyServer", args.ServerName);
+        Assert.Equal("Hello World", args.Text);
+        Assert.False(args.IsError);
+    }
+
+    [Fact]
+    public void ServerOutputEventArgs_ErrorFlag()
+    {
+        var args = new ServerOutputEventArgs("Srv", "fail", isError: true);
+        Assert.True(args.IsError);
+    }
+
+    // ─── ServerOutputReceived event subscription ──────────────────────────
+    [Fact]
+    public void ServerOutputReceived_CanSubscribe()
+    {
+        var manager = new ServerManager();
+        var received = new List<ServerOutputEventArgs>();
+        manager.ServerOutputReceived += (_, e) => received.Add(e);
+
+        // Cannot start a real process in tests, but verify the event is wirable
+        // and the manager exposes it without throwing.
+        Assert.Empty(received);
+    }
 }
