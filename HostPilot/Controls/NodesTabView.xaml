@@ -1,0 +1,26 @@
+<UserControl x:Class="HostPilot.Controls.NodesTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+            <Button Content="Refresh Nodes" Width="140" Margin="0,0,8,0" />
+            <Button Content="Add Node" Width="120" />
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding DisplayName}" Width="*" />
+                <DataGridTextColumn Header="Host" Binding="{Binding Hostname}" Width="180" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100" />
+                <DataGridTextColumn Header="CPU %" Binding="{Binding CpuPercent}" Width="80" />
+                <DataGridTextColumn Header="Memory Used (MB)" Binding="{Binding MemoryUsedMb}" Width="140" />
+                <DataGridTextColumn Header="Last Heartbeat" Binding="{Binding LastHeartbeatUtc}" Width="180" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

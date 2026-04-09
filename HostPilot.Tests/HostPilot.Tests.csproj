@@ -16,5 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../HostPilot.Core/HostPilot.Core.csproj" />
+    <ProjectReference Include="../HostPilot.Core.Execution/HostPilot.Core.Execution.csproj" />
+    <ProjectReference Include="../HostPilot.Security/HostPilot.Security.csproj" />
   </ItemGroup>
 </Project>
