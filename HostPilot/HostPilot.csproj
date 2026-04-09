@@ -20,6 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="../HostPilot.Core/HostPilot.Core.csproj" />
     <ProjectReference Include="../HostPilot.Telemetry/HostPilot.Telemetry.csproj" />
+    <ProjectReference Include="../HostPilot.Contracts/HostPilot.Contracts.csproj" />
+    <ProjectReference Include="../HostPilot.Remote.Contracts/HostPilot.Remote.Contracts.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="servers.json">

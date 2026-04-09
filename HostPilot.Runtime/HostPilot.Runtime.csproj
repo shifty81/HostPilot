@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>HostPilot.Runtime</RootNamespace>
+    <AssemblyName>HostPilot.Runtime</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HostPilot.Core/HostPilot.Core.csproj" />
+    <ProjectReference Include="../HostPilot.Core.Execution/HostPilot.Core.Execution.csproj" />
+    <ProjectReference Include="../HostPilot.Contracts/HostPilot.Contracts.csproj" />
+  </ItemGroup>
+</Project>
