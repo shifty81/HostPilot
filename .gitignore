@@ -70,5 +70,9 @@ Backups/
 SteamCmd/
 SteamServerTool.zip
 
+# Exception: SteamCmd source code namespace folder
+!HostPilot.Core/Services/SteamCmd/
+!HostPilot.Core/Services/SteamCmd/**
+
 # Implementation packs (to be removed after deployment)
 
