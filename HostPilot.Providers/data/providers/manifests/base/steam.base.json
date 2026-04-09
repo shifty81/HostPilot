@@ -1,0 +1,62 @@
+{
+  "id": "steam.base",
+  "version": "1.0.0",
+  "schemaVersion": "1.0",
+  "displayName": "Steam Base",
+  "providerType": "SteamCmd",
+  "gameFamily": "Base",
+  "capabilities": {
+    "supportsInstall": true,
+    "supportsUpdate": true,
+    "supportsStart": true,
+    "supportsStop": true,
+    "supportsValidation": true,
+    "supportsConfigFiles": true,
+    "supportsCustomStartArgs": true,
+    "supportsMultipleInstances": true
+  },
+  "tabs": [
+    { "id": "general", "title": "General", "order": 10 },
+    { "id": "network", "title": "Network", "order": 20 },
+    { "id": "advanced", "title": "Advanced", "order": 100, "advanced": true }
+  ],
+  "sections": [
+    { "id": "installPaths", "tabId": "general", "title": "Install Paths", "order": 10 },
+    { "id": "networkPorts", "tabId": "network", "title": "Ports", "order": 10 },
+    { "id": "rawOverrides", "tabId": "advanced", "title": "Raw Overrides", "order": 10, "advanced": true }
+  ],
+  "fields": [
+    {
+      "id": "installDirectory",
+      "sectionId": "installPaths",
+      "key": "runtime.paths.installDirectory",
+      "type": "Folder",
+      "label": "Install Directory",
+      "required": true,
+      "order": 10
+    },
+    {
+      "id": "gamePort",
+      "sectionId": "networkPorts",
+      "key": "server.network.gamePort",
+      "type": "Port",
+      "label": "Game Port",
+      "required": true,
+      "default": 27015,
+      "order": 10
+    },
+    {
+      "id": "rawLaunchArgs",
+      "sectionId": "rawOverrides",
+      "key": "advanced.rawLaunchArgs",
+      "type": "TextArea",
+      "label": "Additional Launch Arguments",
+      "advanced": true,
+      "order": 10
+    }
+  ],
+  "advanced": {
+    "supportsRawLaunchArgs": true,
+    "supportsRawConfigOverrides": true
+  }
+}

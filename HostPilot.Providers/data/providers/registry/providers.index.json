@@ -1,0 +1,18 @@
+{
+  "providers": [
+    {
+      "id": "steam.rust",
+      "manifestPath": "steam/rust.json",
+      "adapterType": "RustProviderAdapter",
+      "enabled": true,
+      "tags": ["steam", "survival", "rcon"]
+    },
+    {
+      "id": "external.minecraft.java",
+      "manifestPath": "external/minecraft-java.json",
+      "adapterType": "MinecraftJavaProviderAdapter",
+      "enabled": true,
+      "tags": ["java", "external", "modded"]
+    }
+  ]
+}
